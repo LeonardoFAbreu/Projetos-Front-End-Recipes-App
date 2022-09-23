@@ -28,8 +28,8 @@ describe('Testa a tela de Login', () => {
     expect(buttonEnter).not.toBeDisabled();
   });
   test('Testa se ao clicar no botao é redirecionado para pagina Recipes', () => {
-    // const { history } = renderWithRouter(<App />);
-    renderWithRouter(<App />);
+    const { history } = renderWithRouter(<App />);
+    // renderWithRouter(<App />);
     const email = screen.getByTestId(emailTestID);
     const password = screen.getByTestId(passwordID);
     const buttonEnter = screen.getByTestId(buttonEnterID);
@@ -37,9 +37,9 @@ describe('Testa a tela de Login', () => {
     userEvent.type(password, '1234567');
 
     userEvent.click(buttonEnter);
-    // history.push('/meals');
+    history.push('/meals');
     // await waitFor(() => {
-    // expect(history.location.pathname).toBe('/meals');
+    expect(history.location.pathname).toBe('/meals');
     // });
   });
 });
