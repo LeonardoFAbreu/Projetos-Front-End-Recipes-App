@@ -27,19 +27,17 @@ describe('Testa a tela de Login', () => {
     userEvent.type(password, '1234567');
     expect(buttonEnter).not.toBeDisabled();
   });
-  test('Testa se ao clicar no botao é redirecionado para pagina Recipes', () => {
-    // const { history } = renderWithRouter(<App />);
-    renderWithRouter(<App />);
+  test('Testa se ao clicar no botao é redirecionado para pagina Recipes', async () => {
+    const { history } = renderWithRouter(<App />);
     const email = screen.getByTestId(emailTestID);
     const password = screen.getByTestId(passwordID);
     const buttonEnter = screen.getByTestId(buttonEnterID);
     userEvent.type(email, 'grupo12@trybe.com');
     userEvent.type(password, '1234567');
-
     userEvent.click(buttonEnter);
-    // history.push('/meals');
-    // await waitFor(() => {
-    // expect(history.location.pathname).toBe('/meals');
-    // });
+    const recipes = await screen.findByText('Recipes');
+    console.log(history.location.pathname);
+
+    expect(recipes).toBeInTheDocument();
   });
 });
