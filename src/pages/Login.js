@@ -31,32 +31,34 @@ export default function Login({ history }) {
   };
 
   return (
-    <form>
-      <input
-        type="text"
-        name="email"
-        value={ inputs.email }
-        placeholder="email"
-        onChange={ handleLoginForm }
-        data-testid="email-input"
-      />
-      <input
-        type="password"
-        name="password"
-        value={ inputs.password }
-        placeholder="password"
-        onChange={ handleLoginForm }
-        data-testid="password-input"
-      />
-      <button
-        type="button"
-        data-testid="login-submit-btn"
-        disabled={ inputs.isButtonEnterDisabled }
-        onClick={ handleClick }
-      >
-        Enter
-      </button>
-    </form>
+    <div>
+      <form>
+        <input
+          type="text"
+          name="email"
+          value={ inputs.email }
+          placeholder="email"
+          onChange={ handleLoginForm }
+          data-testid="email-input"
+        />
+        <input
+          type="password"
+          name="password"
+          value={ inputs.password }
+          placeholder="password"
+          onChange={ handleLoginForm }
+          data-testid="password-input"
+        />
+        <button
+          type="button"
+          data-testid="login-submit-btn"
+          disabled={ inputs.isButtonEnterDisabled }
+          onClick={ handleClick }
+        >
+          Enter
+        </button>
+      </form>
+    </div>
   );
 }
 

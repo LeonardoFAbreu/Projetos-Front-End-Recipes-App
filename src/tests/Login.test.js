@@ -29,6 +29,7 @@ describe('Testa a tela de Login', () => {
   });
   test('Testa se ao clicar no botao é redirecionado para pagina Recipes', async () => {
     const { history } = renderWithRouter(<App />);
+    // renderWithRouter(<App />);
     const email = screen.getByTestId(emailTestID);
     const password = screen.getByTestId(passwordID);
     const buttonEnter = screen.getByTestId(buttonEnterID);
