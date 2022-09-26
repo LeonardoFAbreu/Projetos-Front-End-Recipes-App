@@ -50,7 +50,7 @@ export default function Header(props) {
               data-testid="search-input"
             />
           )}
-          <SearchBar inputSearch={ inputSearch } />
+          <SearchBar inputSearch={ inputSearch } title={ title } />
         </>
       )}
     </div>
