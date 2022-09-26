@@ -8,17 +8,12 @@ import searchIcon from '../images/searchIcon.svg';
 export default function Header(props) {
   const [showInputSearch, setShowInputSearch] = useState(false);
 
-  const [inputs, setInputs] = useState({
-    search: '',
-  });
+  const [inputSearch, setInputSearch] = useState('');
 
   const { title, showSearch, showProfile } = props;
 
   const handleInputSearch = ({ target }) => {
-    setInputs((prevState) => ({
-      ...prevState,
-      [target.name]: target.value,
-    }));
+    setInputSearch(target.value);
   };
 
   return (
@@ -45,22 +40,23 @@ export default function Header(props) {
             style={ { cursor: 'pointer' } }
             data-testid="search-top-btn"
           />
-          <SearchBar />
+          {showInputSearch && (
+            <input
+              type="text"
+              name="search"
+              value={ inputSearch }
+              placeholder="search"
+              onChange={ handleInputSearch }
+              data-testid="search-input"
+            />
+          )}
+          <SearchBar inputSearch={ inputSearch } />
         </>
-      )}
-      {showInputSearch && (
-        <input
-          type="text"
-          name="search"
-          value={ inputs.search }
-          placeholder="email"
-          onChange={ handleInputSearch }
-          data-testid="search-input"
-        />
       )}
     </div>
   );
 }
+
 Header.propTypes = {
   title: PropTypes.string.isRequired,
   showSearch: PropTypes.bool.isRequired,
