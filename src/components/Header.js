@@ -45,22 +45,23 @@ export default function Header(props) {
             style={ { cursor: 'pointer' } }
             data-testid="search-top-btn"
           />
-          <SearchBar />
+          {showInputSearch && (
+            <input
+              type="text"
+              name="search"
+              value={ inputs.search }
+              placeholder="search"
+              onChange={ handleInputSearch }
+              data-testid="search-input"
+            />
+          )}
+          <SearchBar inputSearch={ inputs.search } />
         </>
-      )}
-      {showInputSearch && (
-        <input
-          type="text"
-          name="search"
-          value={ inputs.search }
-          placeholder="email"
-          onChange={ handleInputSearch }
-          data-testid="search-input"
-        />
       )}
     </div>
   );
 }
+
 Header.propTypes = {
   title: PropTypes.string.isRequired,
   showSearch: PropTypes.bool.isRequired,

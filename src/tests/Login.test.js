@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from '../helpers/renderWithRouter';
@@ -10,7 +10,7 @@ const buttonEnterID = 'login-submit-btn';
 
 describe('Testa a tela de Login', () => {
   test('Verifica se os inputs do formulário de login existem', () => {
-    render(<App />);
+    renderWithRouter(<App />);
     const email = screen.getByTestId(emailTestID);
     const password = screen.getByTestId(passwordID);
     const buttonEnter = screen.getByTestId(buttonEnterID);
@@ -19,7 +19,7 @@ describe('Testa a tela de Login', () => {
     expect(buttonEnter).toBeInTheDocument();
   });
   test('Verifica se é possível digitar nos inputs', () => {
-    render(<App />);
+    renderWithRouter(<App />);
     const email = screen.getByTestId(emailTestID);
     const password = screen.getByTestId(passwordID);
     const buttonEnter = screen.getByTestId(buttonEnterID);
@@ -27,7 +27,7 @@ describe('Testa a tela de Login', () => {
     userEvent.type(password, '1234567');
     expect(buttonEnter).not.toBeDisabled();
   });
-  test('Testa se ao clicar no botao é redirecionado para pagina Recipes', async () => {
+  test('Testa se ao clicar no botão é redirecionado para pagina Recipes', async () => {
     const { history } = renderWithRouter(<App />);
     // renderWithRouter(<App />);
     const email = screen.getByTestId(emailTestID);
