@@ -1,29 +1,30 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function Login({ history }) {
   const [inputs, setInputs] = useState({
     email: '',
     password: '',
-    isButtonEnterDisabled: true,
   });
 
-  const validateInputs = () => {
-    const minimumPasswordLength = 5;
-    const isValidEmail = /^[^@^ ]+@[^@^ ]+\.[a-z]{2,3}(\.[a-z]{2})?$/.test(inputs.email);
-    const isValidLength = inputs.password.length > minimumPasswordLength;
-    return !(isValidEmail && isValidLength);
-  };
+  const [button, setButton] = useState(true);
 
   const handleLoginForm = ({ target }) => {
     setInputs((prevState) => ({
       ...prevState,
       [target.name]: target.value,
-      isButtonEnterDisabled: validateInputs(),
     }));
   };
 
-  const handleClick = () => {
+  useEffect(() => {
+    const minimumPasswordLength = 6;
+    const isValidEmail = /^[^@^ ]+@[^@^ ]+\.[a-z]{2,3}(\.[a-z]{2})?$/.test(inputs.email);
+    const isValidLength = inputs.password.length > minimumPasswordLength;
+    return setButton(!(isValidEmail && isValidLength));
+  }, [inputs]);
+
+  const handleClick = (event) => {
+    event.preventDefault();
     localStorage.setItem('user', JSON.stringify({ email: inputs.email }));
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('drinksToken', 1);
@@ -52,7 +53,7 @@ export default function Login({ history }) {
         <button
           type="submit"
           data-testid="login-submit-btn"
-          disabled={ inputs.isButtonEnterDisabled }
+          disabled={ button }
         >
           Enter
         </button>

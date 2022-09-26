@@ -8,17 +8,12 @@ import searchIcon from '../images/searchIcon.svg';
 export default function Header(props) {
   const [showInputSearch, setShowInputSearch] = useState(false);
 
-  const [inputs, setInputs] = useState({
-    search: '',
-  });
+  const [inputSearch, setInputSearch] = useState('');
 
   const { title, showSearch, showProfile } = props;
 
   const handleInputSearch = ({ target }) => {
-    setInputs((prevState) => ({
-      ...prevState,
-      [target.name]: target.value,
-    }));
+    setInputSearch(target.value);
   };
 
   return (
@@ -49,13 +44,13 @@ export default function Header(props) {
             <input
               type="text"
               name="search"
-              value={ inputs.search }
+              value={ inputSearch }
               placeholder="search"
               onChange={ handleInputSearch }
               data-testid="search-input"
             />
           )}
-          <SearchBar inputSearch={ inputs.search } />
+          <SearchBar inputSearch={ inputSearch } />
         </>
       )}
     </div>

@@ -15,7 +15,9 @@ export default function SearchBar(props) {
 
   const handleSearch = () => {
     const { searchBar } = radioSearchBar;
+    // console.log(inputSearch.length);
     if (searchBar === 'First letter' && inputSearch.length > 1) {
+      // console.log('entrei');
       return global.alert('Your search must have only 1 (one) character');
     }
     getMeals(inputSearch, searchBar);

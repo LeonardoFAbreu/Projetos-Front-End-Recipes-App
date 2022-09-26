@@ -18,6 +18,7 @@ describe('Testa a tela de Login', () => {
     expect(password).toBeInTheDocument();
     expect(buttonEnter).toBeInTheDocument();
   });
+
   test('Verifica se é possível digitar nos inputs', () => {
     renderWithRouter(<App />);
     const email = screen.getByTestId(emailTestID);
@@ -27,18 +28,15 @@ describe('Testa a tela de Login', () => {
     userEvent.type(password, '1234567');
     expect(buttonEnter).not.toBeDisabled();
   });
+
   test('Testa se ao clicar no botão é redirecionado para pagina Recipes', async () => {
     const { history } = renderWithRouter(<App />);
-    // renderWithRouter(<App />);
     const email = screen.getByTestId(emailTestID);
     const password = screen.getByTestId(passwordID);
     const buttonEnter = screen.getByTestId(buttonEnterID);
     userEvent.type(email, 'grupo12@trybe.com');
     userEvent.type(password, '1234567');
     userEvent.click(buttonEnter);
-    const recipes = await screen.findByText('Recipes');
-    console.log(history.location.pathname);
-
-    expect(recipes).toBeInTheDocument();
+    expect(history.location.pathname).toBe('/meals');
   });
 });

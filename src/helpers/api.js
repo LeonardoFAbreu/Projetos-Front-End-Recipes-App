@@ -5,12 +5,11 @@ const getMeals = async (input, radio) => {
   if (radio === 'Name') urlSearch = `search.php?s=${input}`;
   if (radio === 'First letter') urlSearch = `search.php?f=${input}`;
   try {
-    console.log(`${URL}${urlSearch}`);
     const response = await fetch(`${URL}${urlSearch}`);
     const data = await response.json();
-    console.log(data.meals);
+    return data.meals;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
