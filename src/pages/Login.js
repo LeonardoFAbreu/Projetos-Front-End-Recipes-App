@@ -10,7 +10,7 @@ export default function Login({ history }) {
 
   const validateInputs = () => {
     const minimumPasswordLength = 5;
-    const isValidEmail = /\S+@\S+\.\S+/.test(inputs.email);
+    const isValidEmail = /^[^@^ ]+@[^@^ ]+\.[a-z]{2,3}(\.[a-z]{2})?$/.test(inputs.email);
     const isValidLength = inputs.password.length > minimumPasswordLength;
     return !(isValidEmail && isValidLength);
   };
@@ -32,7 +32,7 @@ export default function Login({ history }) {
 
   return (
     <div>
-      <form>
+      <form onSubmit={ handleClick }>
         <input
           type="text"
           name="email"
@@ -50,10 +50,9 @@ export default function Login({ history }) {
           data-testid="password-input"
         />
         <button
-          type="button"
+          type="submit"
           data-testid="login-submit-btn"
           disabled={ inputs.isButtonEnterDisabled }
-          onClick={ handleClick }
         >
           Enter
         </button>
