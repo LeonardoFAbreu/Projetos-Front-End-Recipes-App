@@ -3,6 +3,8 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Recipes from '../pages/Recipes';
 import renderWithRouter from '../helpers/renderWithRouter';
+// import Drinks from '../pages/Drinks';
+import App from '../App';
 
 const searchImgButtonID = 'search-top-btn';
 const radioFirstLetter = 'first-letter-search-radio';
@@ -31,6 +33,19 @@ describe('Testa o component SearchBar', () => {
     userEvent.click(radio);
     const searchInput = screen.getByTestId(searchInputID);
     userEvent.type(searchInput, 'o');
+    const buttonSearch = screen.getByTestId(buttonSearchID);
+    userEvent.click(buttonSearch);
+  });
+
+  test('Verifica se é possível pesquisar por ingrediente', () => {
+    const { history } = renderWithRouter(<App />);
+    history.push('/drinks');
+    const searchButton = screen.getByTestId(searchImgButtonID);
+    userEvent.click(searchButton);
+    const radio = screen.getByTestId(radioFirstLetter);
+    userEvent.click(radio);
+    const searchInput = screen.getByTestId(searchInputID);
+    userEvent.type(searchInput, 'l');
     const buttonSearch = screen.getByTestId(buttonSearchID);
     userEvent.click(buttonSearch);
   });

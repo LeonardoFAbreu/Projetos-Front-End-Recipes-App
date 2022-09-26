@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import getMeals from '../helpers/api';
+import { getMeals, getDrinks } from '../helpers/api';
 
 export default function SearchBar(props) {
   const [radioSearchBar, setRadioSearchBar] = useState({ searchBar: '' });
 
+  const location = useLocation();
   const handleSelectOrderControl = ({ target }) => {
     setRadioSearchBar((prevState) => ({
       ...prevState,
@@ -20,7 +22,10 @@ export default function SearchBar(props) {
       // console.log('entrei');
       return global.alert('Your search must have only 1 (one) character');
     }
-    getMeals(inputSearch, searchBar);
+    if (location.pathname === '/drinks') {
+      return getDrinks(inputSearch, searchBar);
+    }
+    return getMeals(inputSearch, searchBar);
   };
 
   return (
@@ -72,5 +77,8 @@ export default function SearchBar(props) {
 }
 
 SearchBar.propTypes = {
-  inputSearch: PropTypes.string.isRequired,
-};
+  inputSearch: PropTypes.shape({
+    length: PropTypes.number,
+  }),
+  title: PropTypes.string,
+}.isRequired;
