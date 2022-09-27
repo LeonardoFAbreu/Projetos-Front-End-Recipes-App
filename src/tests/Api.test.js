@@ -1,4 +1,4 @@
-import { getMeals, getDrinks, verifyApiResponse } from '../helpers/api';
+import { getMeals, getDrinks, verifyApiResponse, filterByCategory } from '../helpers/api';
 
 describe('Verifica APIs', () => {
   test('Verifica a api de Meals', async () => {
@@ -15,5 +15,9 @@ describe('Verifica APIs', () => {
   });
   test('Testa verifyApiResponse', () => {
     verifyApiResponse(['comida', 'bebida']);
+  });
+  test('Verifica o funcionamento da função filterByCategory', async () => {
+    await filterByCategory('drinks', 'Shake');
+    await filterByCategory('meals', 'Beef');
   });
 });
