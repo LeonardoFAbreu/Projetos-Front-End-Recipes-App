@@ -2,7 +2,6 @@ import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from '../helpers/renderWithRouter';
-// import Drinks from '../pages/Drinks';
 import App from '../App';
 
 const ingredientID = 'ingredient-search-radio';
@@ -84,6 +83,7 @@ describe('Testa o component SearchBar', () => {
     await waitFor(() => {
       expect(global.alert).toHaveBeenCalled();
     });
+    global.alert.mockClear();
   });
   test('Verifica se quando apenas um prato é encontrado, o usuário é redirecionado automagicamente para a tela de detalhes da receita', () => {
     const { history } = renderWithRouter(<App />);
@@ -138,5 +138,6 @@ describe('Testa o component SearchBar', () => {
     await waitFor(() => {
       expect(global.alert).toHaveBeenCalled();
     });
+    global.alert.mockClear();
   });
 });
