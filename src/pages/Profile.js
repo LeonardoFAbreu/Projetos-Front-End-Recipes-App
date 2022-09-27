@@ -1,16 +1,12 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 export default function Profile({ history }) {
-  const [emailValue, setEmailValue] = useState();
-  useEffect(() => {
-    const email = localStorage.getItem('user');
-    const objectEmail = JSON.parse(email);
-    setEmailValue(objectEmail.email);
-  }, []);
+  const email = localStorage.getItem('user');
+  const objectEmail = JSON.parse(email);
 
   const logoutAccount = (event) => {
     event.preventDefault();
@@ -21,7 +17,7 @@ export default function Profile({ history }) {
   return (
     <div>
       <Header title="Profile" showSearch={ false } showProfile />
-      <h2 data-testid="profile-email">{ emailValue }</h2>
+      <h2 data-testid="profile-email">{ objectEmail && objectEmail.email }</h2>
       <Link to="/done-recipes" data-testid="profile-done-btn">
         Done Recipes
       </Link>
