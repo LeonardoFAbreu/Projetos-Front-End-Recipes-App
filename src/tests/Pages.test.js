@@ -4,7 +4,6 @@ import App from '../App';
 import DrinksDetails from '../pages/DrinksDetails';
 import RecipesDetails from '../pages/RecipesDetails';
 import FavoriteRecipes from '../pages/FavoriteRecipes';
-import Profile from '../pages/Profile';
 
 describe('Testa se as páginas são renderizadas', () => {
   test('Verifica se...', () => {
@@ -16,6 +15,5 @@ describe('Testa se as páginas são renderizadas', () => {
     renderWithRouter(<DrinksDetails />);
     renderWithRouter(<RecipesDetails />);
     renderWithRouter(<FavoriteRecipes />);
-    renderWithRouter(<Profile />);
   });
 });
