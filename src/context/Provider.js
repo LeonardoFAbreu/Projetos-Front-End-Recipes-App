@@ -7,11 +7,15 @@ export default function Provider({ children }) {
 
   const [foodRecipes, setFoodRecipes] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const contextValue = {
     drinkRecipes,
     setDrinkRecipes,
     foodRecipes,
     setFoodRecipes,
+    isLoading,
+    setIsLoading,
   };
 
   return (
