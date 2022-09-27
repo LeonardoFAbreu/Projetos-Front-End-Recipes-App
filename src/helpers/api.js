@@ -29,3 +29,39 @@ export const getDrinks = async (input, radio) => {
     return error;
   }
 };
+
+export const getMealsCategories = async () => {
+  const URL = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+  try {
+    const response = await fetch(URL);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getDrinksCategories = async () => {
+  const URL = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+  try {
+    const response = await fetch(URL);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const filterByCategory = async (type, category) => {
+  let urlSearch = '';
+  if (type === 'meals') urlSearch = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
+  if (type === 'drinks') urlSearch = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
+
+  try {
+    const response = await fetch(urlSearch);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};

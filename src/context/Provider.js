@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import MyContext from './MyContext';
-import { getMeals, getDrinks } from '../helpers/api';
+import {
+  getMeals,
+  getDrinks,
+  getMealsCategories,
+  getDrinksCategories,
+} from '../helpers/api';
 
 export default function Provider({ children }) {
+  const [foodRecipes, setMealsRecipes] = useState([]);
+
+  const [mealsCategories, setMealsCategories] = useState([]);
+
   const [drinkRecipes, setDrinkRecipes] = useState([]);
 
-  const [foodRecipes, setFoodRecipes] = useState([]);
+  const [drinksCategories, setDrinksCategories] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -14,7 +23,7 @@ export default function Provider({ children }) {
     setIsLoading(true);
     const meals = async () => {
       const initialSearch = await getMeals('', 'Name');
-      setFoodRecipes(initialSearch.meals);
+      setMealsRecipes(initialSearch.meals);
     };
     meals();
     const drinks = async () => {
@@ -25,13 +34,28 @@ export default function Provider({ children }) {
     setIsLoading(false);
   }, []);
 
+  useEffect(() => {
+    const meals = async () => {
+      const initialSearch = await getMealsCategories();
+      setMealsCategories(initialSearch.meals);
+    };
+    meals();
+    const drinks = async () => {
+      const initialSearch = await getDrinksCategories();
+      setDrinksCategories(initialSearch.drinks);
+    };
+    drinks();
+  }, []);
+
   const contextValue = {
     drinkRecipes,
     setDrinkRecipes,
     foodRecipes,
-    setFoodRecipes,
+    setMealsRecipes,
     isLoading,
     setIsLoading,
+    mealsCategories,
+    drinksCategories,
   };
 
   return (

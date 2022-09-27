@@ -4,9 +4,10 @@ import MyContext from '../context/MyContext';
 import Loading from '../components/Loading';
 import Card from '../components/Card';
 import Footer from '../components/Footer';
+import Filters from '../components/Filters';
 
 export default function Drinks() {
-  const { drinkRecipes, isLoading } = useContext(MyContext);
+  const { drinkRecipes, isLoading, drinksCategories } = useContext(MyContext);
 
   const cards = drinkRecipes;
 
@@ -15,6 +16,9 @@ export default function Drinks() {
   return (
     <>
       <Header title="Drinks" showSearch showProfile />
+      <div className="row justify-content-center">
+        <Filters categories={ drinksCategories } />
+      </div>
       <div className="container mt-3">
         <div className="row justify-content-center">
           {isLoading && <Loading />}
