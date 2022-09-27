@@ -1,3 +1,5 @@
+export const verifyApiResponse = (data) => data.length === 1;
+
 const filterType = (input, radio) => {
   let urlSearch = '';
   if (radio === 'Ingredient') urlSearch = `filter.php?i=${input}`;
@@ -22,7 +24,6 @@ export const getDrinks = async (input, radio) => {
   try {
     const response = await fetch(`${URL}${filterType(input, radio)}`);
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     return error;

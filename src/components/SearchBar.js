@@ -1,31 +1,47 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { useLocation, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { getMeals, getDrinks } from '../helpers/api';
+import { getMeals, getDrinks, verifyApiResponse } from '../helpers/api';
+import MyContext from '../context/MyContext';
 
-export default function SearchBar(props) {
+function SearchBar(props) {
   const [radioSearchBar, setRadioSearchBar] = useState({ searchBar: '' });
 
+  const { setDrinkRecipes, setFoodRecipes } = useContext(MyContext);
+
   const location = useLocation();
+
   const handleSelectOrderControl = ({ target }) => {
     setRadioSearchBar((prevState) => ({
       ...prevState,
       [target.name]: target.value,
     }));
   };
-  const { inputSearch } = props;
 
-  const handleSearch = () => {
+  const { inputSearch, history } = props;
+
+  const searchNotFound = () => global
+    .alert('Sorry, we haven\'t found any recipes for these filters.');
+
+  const handleSearch = async () => {
     const { searchBar } = radioSearchBar;
-    // console.log(inputSearch.length);
     if (searchBar === 'First letter' && inputSearch.length > 1) {
-      // console.log('entrei');
       return global.alert('Your search must have only 1 (one) character');
     }
     if (location.pathname === '/drinks') {
-      return getDrinks(inputSearch, searchBar);
+      const data = await getDrinks(inputSearch, searchBar);
+      if (data.drinks === null) return searchNotFound();
+      if (verifyApiResponse(data.drinks)) {
+        return history.push(`/drinks/${data.drinks[0].idDrink}`);
+      }
+      return setDrinkRecipes(data.drinks);
     }
-    return getMeals(inputSearch, searchBar);
+    const data = await getMeals(inputSearch, searchBar);
+    if (data.meals === null) return searchNotFound();
+    if (verifyApiResponse(data.meals)) {
+      return history.push(`/meals/${data.meals[0].idMeal}`);
+    }
+    return setFoodRecipes(data.meals);
   };
 
   return (
@@ -82,3 +98,5 @@ SearchBar.propTypes = {
   }),
   title: PropTypes.string,
 }.isRequired;
+
+export default withRouter(SearchBar);
