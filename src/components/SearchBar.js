@@ -21,8 +21,8 @@ function SearchBar(props) {
   const { inputSearch, history } = props;
 
   const searchNotFound = () => {
-    global.alert('Sorry, we haven\'t found any recipes for these filters.');
-    return setIsLoading(false);
+    setIsLoading(false);
+    return global.alert('Sorry, we haven\'t found any recipes for these filters.');
   };
 
   const handleSearch = async () => {
