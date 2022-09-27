@@ -7,7 +7,7 @@ import MyContext from '../context/MyContext';
 function SearchBar(props) {
   const [radioSearchBar, setRadioSearchBar] = useState({ searchBar: '' });
 
-  const { setDrinkRecipes, setFoodRecipes, setIsLoading } = useContext(MyContext);
+  const { setDrinkRecipes, setMealsRecipes, setIsLoading } = useContext(MyContext);
 
   const location = useLocation();
 
@@ -49,7 +49,7 @@ function SearchBar(props) {
       return history.push(`/meals/${data.meals[0].idMeal}`);
     }
     setIsLoading(false);
-    return setFoodRecipes(data.meals);
+    return setMealsRecipes(data.meals);
   };
 
   return (
