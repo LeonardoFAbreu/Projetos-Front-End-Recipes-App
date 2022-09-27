@@ -47,9 +47,8 @@ export default function Filters(props) {
       {categories.map((category, index) => (
         index < firstsCategories
         && (
-          <div className="col-3">
+          <div className="col-3" key={ category.strCategory }>
             <button
-              key={ category.strCategory }
               type="button"
               onClick={ () => handClickFilter(category.strCategory) }
               data-testid={ `${category.strCategory}-category-filter` }
