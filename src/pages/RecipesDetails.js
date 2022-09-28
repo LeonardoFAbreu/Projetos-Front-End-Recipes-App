@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
+import copy from 'clipboard-copy';
 import Recommended from '../components/Recommended';
 import StartRecipes from '../components/StartRecipes';
 import { getRecipesById } from '../helpers/api';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 
 export default function RecipesDetails() {
   const [recipesDetails, setRecipesDetails] = useState([]);
 
   const { id } = useParams();
+
+  const location = useLocation();
 
   useEffect(() => {
     const getDetails = async () => {
@@ -38,6 +43,15 @@ export default function RecipesDetails() {
     <>
       <p data-testid="recipe-title">{ recipesDetails.strMeal }</p>
       <p data-testid="recipe-category">{ recipesDetails.strCategory }</p>
+      <img src={ whiteHeartIcon } alt="Favorite" data-testid="favorite-btn" />
+      <img
+        src={ shareIcon }
+        alt="Share"
+        onClick={ () => copy(`${location.pathname}`) }
+        role="presentation"
+        data-testid="share-btn"
+      />
+      <span>Link copied!</span>
       <img
         src={ recipesDetails.strMealThumb }
         alt={ recipesDetails.strMeal }
@@ -62,7 +76,7 @@ export default function RecipesDetails() {
         </div>
       )}
       <Recommended />
-      <StartRecipes />
+      <StartRecipes id={ id } type="meals" />
     </>
   );
 }
