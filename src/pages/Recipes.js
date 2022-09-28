@@ -7,25 +7,26 @@ import Footer from '../components/Footer';
 import Filters from '../components/Filters';
 
 export default function Recipes() {
-  const { foodRecipes, isLoading, mealsCategories } = useContext(MyContext);
+  const { mealsRecipes, isLoading, mealsCategories } = useContext(MyContext);
 
-  const cards = foodRecipes;
+  const cards = mealsRecipes;
 
   const maximumCards = 12;
 
   return (
     <>
       <Header title="Meals" showSearch showProfile />
-      <div className="row justify-content-center">
+      <div className="row justify-content-center ">
         <Filters categories={ mealsCategories } />
       </div>
       <div className="container mt-3">
         <div className="row justify-content-center">
           {isLoading && <Loading />}
-          {!isLoading && cards.length > 0 && cards.map((card, index) => (
+          {(!isLoading && cards.length > 0) && cards.map((card, index) => (
             index < maximumCards
           && <Card
             key={ card.idMeal }
+            id={ `/meals/${card.idMeal}` }
             index={ index }
             name={ card.strMeal }
             image={ card.strMealThumb }

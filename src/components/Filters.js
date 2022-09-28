@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import { getMeals, getDrinks, filterByCategory } from '../helpers/api';
@@ -9,20 +9,13 @@ export default function Filters(props) {
 
   const { setDrinkRecipes, setMealsRecipes } = useContext(MyContext);
 
+  const [toggle, setToggle] = useState('');
+
   const firstsCategories = 5;
 
   const location = useLocation();
 
   const type = location.pathname;
-
-  const handClickFilter = async (category) => {
-    if (type === '/meals') {
-      const data = await filterByCategory('meals', category);
-      return setMealsRecipes(data.meals);
-    }
-    const data = await filterByCategory('drinks', category);
-    return setDrinkRecipes(data.drinks);
-  };
 
   const handleClickFilterAll = async () => {
     if (type === '/meals') {
@@ -30,6 +23,18 @@ export default function Filters(props) {
       return setMealsRecipes(data.meals);
     }
     const data = await getDrinks('', 'Name');
+    return setDrinkRecipes(data.drinks);
+  };
+
+  const handClickFilter = async (category) => {
+    if (category === toggle) return handleClickFilterAll();
+    if (type === '/meals') {
+      const data = await filterByCategory('meals', category);
+      setToggle(category);
+      return setMealsRecipes(data.meals);
+    }
+    const data = await filterByCategory('drinks', category);
+    setToggle(category);
     return setDrinkRecipes(data.drinks);
   };
 

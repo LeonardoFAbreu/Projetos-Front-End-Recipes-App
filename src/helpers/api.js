@@ -65,3 +65,17 @@ export const filterByCategory = async (type, category) => {
     return error;
   }
 };
+
+export const getRecipesById = async (type, id) => {
+  let urlSearch = '';
+  if (type === 'meals') urlSearch = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+  if (type === 'drinks') urlSearch = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+
+  try {
+    const response = await fetch(urlSearch);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
