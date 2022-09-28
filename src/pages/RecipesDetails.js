@@ -40,6 +40,21 @@ export default function RecipesDetails() {
     }
     return ingredients;
   };
+  const saveFavorite = () => {
+    const favorites = {
+      id: recipesDetails.idMeal,
+      type: 'meal',
+      nationality: recipesDetails.strArea,
+      category: recipesDetails.strCategory,
+      alcoholicOrNot: '',
+      name: recipesDetails.strMeal,
+      image: recipesDetails.strMealThumb,
+    };
+    const arr = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+
+    const data = [...arr, favorites];
+    localStorage.setItem('favoriteRecipes', JSON.stringify(data));
+  };
 
   const handleShare = () => {
     copy(`http://localhost:3000${location.pathname}`);
@@ -50,7 +65,13 @@ export default function RecipesDetails() {
     <>
       <p data-testid="recipe-title">{ recipesDetails.strMeal }</p>
       <p data-testid="recipe-category">{ recipesDetails.strCategory }</p>
-      <img src={ whiteHeartIcon } alt="Favorite" data-testid="favorite-btn" />
+      <img
+        src={ whiteHeartIcon }
+        alt="Favorite"
+        onClick={ () => saveFavorite() }
+        role="presentation"
+        data-testid="favorite-btn"
+      />
       <img
         src={ shareIcon }
         alt="Share"
