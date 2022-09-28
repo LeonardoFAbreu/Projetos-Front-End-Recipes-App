@@ -10,6 +10,8 @@ import shareIcon from '../images/shareIcon.svg';
 export default function RecipesDetails() {
   const [recipesDetails, setRecipesDetails] = useState([]);
 
+  const [shared, setShared] = useState(false);
+
   const { id } = useParams();
 
   const location = useLocation();
@@ -39,6 +41,11 @@ export default function RecipesDetails() {
     return ingredients;
   };
 
+  const handleShare = () => {
+    copy(`http://localhost:3000${location.pathname}`);
+    setShared(true);
+  };
+
   return (
     <>
       <p data-testid="recipe-title">{ recipesDetails.strMeal }</p>
@@ -47,11 +54,11 @@ export default function RecipesDetails() {
       <img
         src={ shareIcon }
         alt="Share"
-        onClick={ () => copy(`${location.pathname}`) }
+        onClick={ handleShare }
         role="presentation"
         data-testid="share-btn"
       />
-      <span>Share Link copied!</span>
+      {shared && <span>Link copied!</span>}
       <img
         src={ recipesDetails.strMealThumb }
         alt={ recipesDetails.strMeal }
