@@ -1,27 +1,43 @@
 import React, { useContext } from 'react';
+import { useLocation } from 'react-router-dom';
 import MyContext from '../context/MyContext';
 
 export default function Recommended() {
-  const { drinkRecipes, isLoading } = useContext(MyContext);
+  const { mealsRecipes, drinkRecipes, isLoading } = useContext(MyContext);
 
-  const cards = drinkRecipes;
+  const location = useLocation();
+
+  const type = location.pathname;
+
+  const cards = type.includes('meals') ? drinkRecipes : mealsRecipes;
 
   const maximumCards = 6;
   return (
-    <div className="wrapper">
-      {
-        (!isLoading && cards.length > 0) && cards.map((card, index) => (
-          index < maximumCards)
+    <>
+      <div className="wrapper">
+        {
+          (!isLoading && cards.length > 0) && cards.map((card, index) => (
+            index < maximumCards)
           && (
             <div
               key={ index }
               className="item"
               data-testid={ `${index}-recommendation-card` }
             >
-              <p data-testid={ `${index}-recommendation-title` }>{card.strMeal}</p>
+              <p
+                data-testid={ `${index}-recommendation-title` }
+              >
+                {type.includes('meals') ? card.strDrink : card.strMeal}
+              </p>
             </div>
           ))
-      }
-    </div>
+        }
+      </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+    </>
   );
 }
