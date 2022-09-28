@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
+import copy from 'clipboard-copy';
 import Recommended from '../components/Recommended';
 import StartRecipes from '../components/StartRecipes';
 import { getRecipesById } from '../helpers/api';
@@ -9,7 +10,11 @@ import shareIcon from '../images/shareIcon.svg';
 export default function DrinksDetails() {
   const [recipesDetails, setRecipesDetails] = useState([]);
 
+  const [shared, setShared] = useState(false);
+
   const { id } = useParams();
+
+  const location = useLocation();
 
   useEffect(() => {
     const getDetails = async () => {
@@ -42,12 +47,24 @@ export default function DrinksDetails() {
     return ingredients;
   };
 
+  const handleShare = () => {
+    copy(`http://localhost:3000${location.pathname}`);
+    setShared(true);
+  };
+
   return (
     <>
       <p data-testid="recipe-title">{ recipesDetails.strDrink }</p>
       <p data-testid="recipe-category">{ recipesDetails.strAlcoholic }</p>
       <img src={ whiteHeartIcon } alt="Favorite" data-testid="favorite-btn" />
-      <img src={ shareIcon } alt="Share" data-testid="share-btn" />
+      <img
+        src={ shareIcon }
+        alt="Share"
+        onClick={ handleShare }
+        role="presentation"
+        data-testid="share-btn"
+      />
+      {shared && <span>Link copied!</span>}
       <img
         src={ recipesDetails.strDrinkThumb }
         alt={ recipesDetails.strDrink }
