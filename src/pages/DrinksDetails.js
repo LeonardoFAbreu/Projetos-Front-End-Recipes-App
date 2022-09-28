@@ -5,6 +5,7 @@ import Recommended from '../components/Recommended';
 import StartRecipes from '../components/StartRecipes';
 import { getRecipesById } from '../helpers/api';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 
 export default function DrinksDetails() {
@@ -62,18 +63,22 @@ export default function DrinksDetails() {
     const data = [...arr, favorites];
     localStorage.setItem('favoriteRecipes', JSON.stringify(data));
   };
-  
+
   const handleShare = () => {
     copy(`http://localhost:3000${location.pathname}`);
     setShared(true);
   };
+
+  const recipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+
+  const trueOrFalse = recipes.some((element) => element.id === id);
 
   return (
     <>
       <p data-testid="recipe-title">{ recipesDetails.strDrink }</p>
       <p data-testid="recipe-category">{ recipesDetails.strAlcoholic }</p>
       <img
-        src={ whiteHeartIcon }
+        src={ trueOrFalse ? blackHeartIcon : whiteHeartIcon }
         alt="Favorite"
         onClick={ () => saveFavorite() }
         role="presentation"
