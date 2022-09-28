@@ -51,7 +51,7 @@ export default function RecipesDetails() {
         role="presentation"
         data-testid="share-btn"
       />
-      <span>Link copied!</span>
+      <span>Share Link copied!</span>
       <img
         src={ recipesDetails.strMealThumb }
         alt={ recipesDetails.strMeal }
