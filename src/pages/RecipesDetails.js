@@ -10,6 +10,8 @@ import shareIcon from '../images/shareIcon.svg';
 export default function RecipesDetails() {
   const [recipesDetails, setRecipesDetails] = useState([]);
 
+  console.log(recipesDetails);
+
   const { id } = useParams();
 
   const location = useLocation();
@@ -38,12 +40,33 @@ export default function RecipesDetails() {
     }
     return ingredients;
   };
+  const saveFavorite = () => {
+    const favorites = {
+      id: recipesDetails.idMeal,
+      type: 'meal',
+      nationality: recipesDetails.strArea,
+      category: recipesDetails.strCategory,
+      alcoholicOrNot: '',
+      name: recipesDetails.strMeal,
+      image: recipesDetails.strMealThumb,
+    };
+    const arr = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+
+    const data = [...arr, favorites];
+    localStorage.setItem('favoriteRecipes', JSON.stringify(data));
+  };
 
   return (
     <>
       <p data-testid="recipe-title">{ recipesDetails.strMeal }</p>
       <p data-testid="recipe-category">{ recipesDetails.strCategory }</p>
-      <img src={ whiteHeartIcon } alt="Favorite" data-testid="favorite-btn" />
+      <img
+        src={ whiteHeartIcon }
+        alt="Favorite"
+        onClick={ () => saveFavorite() }
+        role="presentation"
+        data-testid="favorite-btn"
+      />
       <img
         src={ shareIcon }
         alt="Share"

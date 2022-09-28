@@ -42,11 +42,33 @@ export default function DrinksDetails() {
     return ingredients;
   };
 
+  const saveFavorite = () => {
+    const favorites = {
+      id: recipesDetails.idDrink,
+      type: 'drink',
+      nationality: '',
+      category: recipesDetails.strCategory,
+      alcoholicOrNot: recipesDetails.strAlcoholic,
+      name: recipesDetails.strDrink,
+      image: recipesDetails.strDrinkThumb,
+    };
+    const arr = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+
+    const data = [...arr, favorites];
+    localStorage.setItem('favoriteRecipes', JSON.stringify(data));
+  };
+
   return (
     <>
       <p data-testid="recipe-title">{ recipesDetails.strDrink }</p>
       <p data-testid="recipe-category">{ recipesDetails.strAlcoholic }</p>
-      <img src={ whiteHeartIcon } alt="Favorite" data-testid="favorite-btn" />
+      <img
+        src={ whiteHeartIcon }
+        alt="Favorite"
+        onClick={ () => saveFavorite() }
+        role="presentation"
+        data-testid="favorite-btn"
+      />
       <img src={ shareIcon } alt="Share" data-testid="share-btn" />
       <img
         src={ recipesDetails.strDrinkThumb }
