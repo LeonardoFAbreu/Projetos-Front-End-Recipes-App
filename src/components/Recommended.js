@@ -3,13 +3,13 @@ import { useLocation } from 'react-router-dom';
 import MyContext from '../context/MyContext';
 
 export default function Recommended() {
-  const { mealsRecipes, drinkRecipes, isLoading } = useContext(MyContext);
+  const { mealsRecipes, drinksRecipes, isLoading } = useContext(MyContext);
 
   const location = useLocation();
 
   const type = location.pathname;
 
-  const cards = type.includes('meals') ? drinkRecipes : mealsRecipes;
+  const cards = type.includes('meals') ? drinksRecipes : mealsRecipes;
 
   const maximumCards = 6;
   return (

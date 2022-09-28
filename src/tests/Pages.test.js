@@ -1,8 +1,8 @@
 import React from 'react';
 import renderWithRouter from '../helpers/renderWithRouter';
 import App from '../App';
-import DrinksDetails from '../pages/DrinksDetails';
-import RecipesDetails from '../pages/RecipesDetails';
+// import DrinksDetails from '../pages/DrinksDetails';
+// import RecipesDetails from '../pages/RecipesDetails';
 import FavoriteRecipes from '../pages/FavoriteRecipes';
 
 describe('Testa se as páginas são renderizadas', () => {
@@ -12,8 +12,8 @@ describe('Testa se as páginas são renderizadas', () => {
     history.push('/drinks');
   });
   test('Verifica se...', () => {
-    renderWithRouter(<DrinksDetails />);
-    renderWithRouter(<RecipesDetails />);
+    // renderWithRouter(<DrinksDetails />);
+    // renderWithRouter(<RecipesDetails />);
     renderWithRouter(<FavoriteRecipes />);
   });
 });

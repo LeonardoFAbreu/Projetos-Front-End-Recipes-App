@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import Recommended from '../components/Recommended';
 import StartRecipes from '../components/StartRecipes';
 import { getRecipesById } from '../helpers/api';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 
 export default function DrinksDetails() {
   const [recipesDetails, setRecipesDetails] = useState([]);
@@ -44,6 +46,8 @@ export default function DrinksDetails() {
     <>
       <p data-testid="recipe-title">{ recipesDetails.strDrink }</p>
       <p data-testid="recipe-category">{ recipesDetails.strAlcoholic }</p>
+      <img src={ whiteHeartIcon } alt="Favorite" data-testid="favorite-btn" />
+      <img src={ shareIcon } alt="Share" data-testid="share-btn" />
       <img
         src={ recipesDetails.strDrinkThumb }
         alt={ recipesDetails.strDrink }
@@ -67,7 +71,7 @@ export default function DrinksDetails() {
           />
         </div>)}
       <Recommended />
-      <StartRecipes />
+      <StartRecipes id={ id } type="drinks" />
     </>
   );
 }

@@ -7,9 +7,9 @@ import Footer from '../components/Footer';
 import Filters from '../components/Filters';
 
 export default function Drinks() {
-  const { drinkRecipes, isLoading, drinksCategories } = useContext(MyContext);
+  const { drinksRecipes, isLoading, drinksCategories } = useContext(MyContext);
 
-  const cards = drinkRecipes;
+  const cards = drinksRecipes;
 
   const maximumCards = 12;
 
