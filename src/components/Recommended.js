@@ -14,7 +14,7 @@ export default function Recommended() {
           index < maximumCards)
           && (
             <div
-              key={ card.idMeal }
+              key={ index }
               className="item"
               data-testid={ `${index}-recommendation-card` }
             >

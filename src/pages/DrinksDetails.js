@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import Recommended from '../components/Recommended';
+import StartRecipes from '../components/StartRecipes';
 import { getRecipesById } from '../helpers/api';
 
 export default function DrinksDetails() {
@@ -39,7 +41,7 @@ export default function DrinksDetails() {
   };
 
   return (
-    <div>
+    <>
       <p data-testid="recipe-title">{ recipesDetails.strDrink }</p>
       <p data-testid="recipe-category">{ recipesDetails.strAlcoholic }</p>
       <img
@@ -64,6 +66,8 @@ export default function DrinksDetails() {
             data-testid="video"
           />
         </div>)}
-    </div>
+      <Recommended />
+      <StartRecipes />
+    </>
   );
 }

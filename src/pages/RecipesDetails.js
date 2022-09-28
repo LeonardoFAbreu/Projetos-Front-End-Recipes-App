@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Recommended from '../components/Recommended';
+import StartRecipes from '../components/StartRecipes';
 import { getRecipesById } from '../helpers/api';
 
 export default function RecipesDetails() {
@@ -33,10 +34,8 @@ export default function RecipesDetails() {
     return ingredients;
   };
 
-  console.log(getIngredients());
-
   return (
-    <div>
+    <>
       <p data-testid="recipe-title">{ recipesDetails.strMeal }</p>
       <p data-testid="recipe-category">{ recipesDetails.strCategory }</p>
       <img
@@ -63,6 +62,7 @@ export default function RecipesDetails() {
         </div>
       )}
       <Recommended />
-    </div>
+      <StartRecipes />
+    </>
   );
 }
