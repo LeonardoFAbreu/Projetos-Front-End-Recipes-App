@@ -22,10 +22,11 @@ export default function Drinks() {
       <div className="container mt-3">
         <div className="row justify-content-center">
           {isLoading && <Loading />}
-          {!isLoading && cards.length > 0 && cards.map((card, index) => (
+          {(!isLoading && cards.length > 0) && cards.map((card, index) => (
             index < maximumCards
           && <Card
             key={ card.idDrink }
+            id={ `/drinks/${card.idDrink}` }
             index={ index }
             name={ card.strDrink }
             image={ card.strDrinkThumb }

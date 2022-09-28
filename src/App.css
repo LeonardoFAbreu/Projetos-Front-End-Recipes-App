@@ -25,3 +25,23 @@ main {
   font-size: 1.1em;
   font-weight: 500;
 }
+
+.wrapper {
+  border: 1px solid #ddd;
+  display: flex;
+  max-height: 120px;
+  overflow-x: auto;
+}
+
+.wrapper::-webkit-scrollbar {
+  width: 2;
+}
+
+.wrapper .item {
+  background: #ddd;
+  height: 110px;
+  line-height: 110px;
+  margin-right: 5px;
+  min-width: 200px;
+  text-align: center;
+}

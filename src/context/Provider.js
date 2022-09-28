@@ -9,7 +9,7 @@ import {
 } from '../helpers/api';
 
 export default function Provider({ children }) {
-  const [foodRecipes, setMealsRecipes] = useState([]);
+  const [mealsRecipes, setMealsRecipes] = useState([]);
 
   const [mealsCategories, setMealsCategories] = useState([]);
 
@@ -50,7 +50,7 @@ export default function Provider({ children }) {
   const contextValue = {
     drinkRecipes,
     setDrinkRecipes,
-    foodRecipes,
+    mealsRecipes,
     setMealsRecipes,
     isLoading,
     setIsLoading,
