@@ -43,7 +43,7 @@ export default function DrinksDetails() {
       />
       <p data-testid="instructions">{ recipesDetails.strInstructions }</p>
       {getIngredients().map((ingredient, index) => (
-        ingredient !== 'undefined undefined'
+        ingredient !== 'undefined undefined' && ingredient !== 'null null'
                 && (
                   <p key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
                     {ingredient}
