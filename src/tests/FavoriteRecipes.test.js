@@ -8,6 +8,14 @@ const emailTestID = 'email-input';
 const passwordID = 'password-input';
 const buttonEnterID = 'login-submit-btn';
 
+document.execCommand = jest.fn().mockResolvedValue('');
+
+Object.assign(navigator, {
+  clipboard: {
+    writeText: () => {},
+  },
+});
+
 describe('Testa a tela de favorites', () => {
   const favoriteRecipes = [
     {
@@ -71,7 +79,7 @@ describe('Testa a tela de favorites', () => {
       expect(meals).toBeInTheDocument();
     });
   });
-  test.only('Verifica se ao clicar em btnFavorite é possivel copiar a url', async () => {
+  test('Verifica se ao clicar em btnFavorite é possivel copiar a url', async () => {
     await waitFor(() => {
       const btnFavorite = screen.getByTestId('0-horizontal-favorite-btn');
       expect(btnFavorite).toBeInTheDocument();
@@ -82,12 +90,22 @@ describe('Testa a tela de favorites', () => {
   });
   test('Verifica se ao clicar em btnShare é possivel copiar a url', async () => {
     await waitFor(() => {
-      // document.execCommand = jest.fn();
-      const btnShare = screen.getByTestId('0-horizontal-share-btn');
-      expect(btnShare).toBeInTheDocument();
-      userEvent.click(btnShare);
-      // const clipBoard = screen.getByText('Link copied!');
-      // expect(clipBoard).toBeInTheDocument();
+      jest.spyOn(navigator.clipboard, 'writeText');
+      const btnShare1 = screen.getByTestId('0-horizontal-share-btn');
+      expect(btnShare1).toBeInTheDocument();
+      userEvent.click(btnShare1);
+      const clipBoard1 = screen.getAllByText('Link copied!')[0];
+      expect(clipBoard1).toBeInTheDocument();
+    });
+  });
+  test('Verifica se ao clicar em btnShare é possivel copiar a url', async () => {
+    await waitFor(() => {
+      jest.spyOn(navigator.clipboard, 'writeText');
+      const btnShare2 = screen.getByTestId('1-horizontal-share-btn');
+      expect(btnShare2).toBeInTheDocument();
+      userEvent.click(btnShare2);
+      const clipBoard2 = screen.getAllByText('Link copied!')[1];
+      expect(clipBoard2).toBeInTheDocument();
     });
   });
 });

@@ -21,7 +21,7 @@ export const getRecipeIngredients = (recipe) => {
   return ingredients;
 };
 
-const createFavorite = (type, recipesDetails) => {
+export const createFavorite = (type, recipesDetails) => {
   if (type === 'meal') {
     const newFavorite = {
       id: recipesDetails.idMeal,
