@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import Recommended from '../components/Recommended';
-import FavoriteAndShare from '../components/git ariteAndShare';
+import FavoriteAndShare from '../components/FavoriteAndShare';
 import StartRecipes from '../components/StartRecipes';
 import { getRecipesById } from '../helpers/api';
 import { embedVideo, getRecipeIngredients } from '../helpers/services';
