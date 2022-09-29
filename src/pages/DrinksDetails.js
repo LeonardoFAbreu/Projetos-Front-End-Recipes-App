@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import copy from 'clipboard-copy';
 import Recommended from '../components/Recommended';
+import FavoriteAndShare from '../components/FavoriteAndShare';
 import StartRecipes from '../components/StartRecipes';
 import { getRecipesById } from '../helpers/api';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
-import shareIcon from '../images/shareIcon.svg';
+import { embedVideo, getRecipeIngredients } from '../helpers/services';
 
 export default function DrinksDetails() {
-  const [recipesDetails, setRecipesDetails] = useState([]);
-
-  const [shared, setShared] = useState(false);
+  const [recipesDetails, setRecipesDetails] = useState({});
 
   const { id } = useParams();
 
@@ -25,74 +21,20 @@ export default function DrinksDetails() {
     getDetails();
   }, [id]);
 
-  const embedVideo = (urlYoutube) => {
-    const limit = -1;
-    const embed = 'https://www.youtube.com/embed/';
-    return `${embed}${urlYoutube.split('=', limit)[1]}`;
-  };
+  const getIngredients = () => getRecipeIngredients(recipesDetails);
 
-  const getIngredients = () => {
-    const totalOfIngredients = 21;
-    const ingredients = [];
-    for (let index = 1; index < totalOfIngredients; index += 1) {
-      const ingredient = `strIngredient${index}`;
-      const measure = `strMeasure${index}`;
-      if (recipesDetails[ingredient] != null) {
-        if (recipesDetails[measure] !== null) {
-          ingredients.push(`${recipesDetails[ingredient]} ${recipesDetails[measure]}`);
-        } else {
-          ingredients.push(recipesDetails[ingredient]);
-        }
-      }
-    }
-    return ingredients;
-  };
-
-  const saveFavorite = () => {
-    const favorites = {
-      id: recipesDetails.idDrink,
-      type: 'drink',
-      nationality: '',
-      category: recipesDetails.strCategory,
-      alcoholicOrNot: recipesDetails.strAlcoholic,
-      name: recipesDetails.strDrink,
-      image: recipesDetails.strDrinkThumb,
-    };
-    const arr = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-
-    const data = [...arr, favorites];
-    localStorage.setItem('favoriteRecipes', JSON.stringify(data));
-  };
-
-  const handleShare = () => {
-    copy(`http://localhost:3000${location.pathname}`);
-    setShared(true);
-  };
-
-  const recipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-
-  const trueOrFalse = recipes.some((element) => element.id === id);
+  const handleVideo = (url) => embedVideo(url);
 
   return (
     <>
       <p data-testid="recipe-title">{ recipesDetails.strDrink }</p>
       <p data-testid="recipe-category">{ recipesDetails.strAlcoholic }</p>
-      <img
-        src={ trueOrFalse ? blackHeartIcon : whiteHeartIcon }
-        alt="Favorite"
-        onClick={ () => saveFavorite() }
-        role="presentation"
-        data-testid="favorite-btn"
+      <FavoriteAndShare
+        recipesDetails={ recipesDetails }
+        id={ id }
+        location={ location }
+        type="drink"
       />
-      <img
-        src={ shareIcon }
-        alt="Share"
-        onClick={ handleShare }
-        role="presentation"
-        data-testid="share-btn"
-      />
-      {shared && <span>Link copied!</span>}
-
       <img
         src={ recipesDetails.strDrinkThumb }
         alt={ recipesDetails.strDrink }
@@ -109,12 +51,13 @@ export default function DrinksDetails() {
       {recipesDetails.strYoutube && (
         <div className="ratio ratio-16x9">
           <iframe
-            src={ embedVideo(recipesDetails.strYoutube) }
+            src={ handleVideo(recipesDetails.strYoutube) }
             title={ recipesDetails.strDrink }
             allowFullScreen
             data-testid="video"
           />
-        </div>)}
+        </div>
+      )}
       <Recommended />
       <StartRecipes id={ id } type="drinks" />
     </>
