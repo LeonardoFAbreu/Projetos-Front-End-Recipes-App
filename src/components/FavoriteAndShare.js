@@ -11,6 +11,7 @@ export default function FavoriteAndShare(props) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const { recipesDetails, id, location, type } = props;
+  console.log(recipesDetails);
 
   useEffect(() => {
     const favoritesRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
