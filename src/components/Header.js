@@ -68,9 +68,9 @@ export default function Header(props) {
               />
             </Link>
           )}
-          <Link to="/favorite-recipes">
+          {/* <Link to="/favorite-recipes">
             Fav
-          </Link>
+          </Link> */}
         </div>
       </div>
       <div className="row text-center mt-5 justify-content-center">
