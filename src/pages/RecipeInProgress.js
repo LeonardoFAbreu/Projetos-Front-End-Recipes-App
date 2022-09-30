@@ -23,7 +23,6 @@ export default function RecipeInProgress() {
   const nameRecipe = type === 'meals' ? 'strMeal' : 'strDrink';
 
   const getIngredients = () => getRecipeIngredients(recipesDetails);
-  console.log(recipesDetails);
 
   return (
     <div>
