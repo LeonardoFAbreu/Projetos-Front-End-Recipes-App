@@ -9,7 +9,7 @@ import { embedVideo, getRecipeIngredients } from '../helpers/services';
 export default function DrinksDetails() {
   const [recipesDetails, setRecipesDetails] = useState({});
 
-  const { id, type } = useParams();
+  const { id } = useParams();
 
   const location = useLocation();
 
@@ -33,7 +33,7 @@ export default function DrinksDetails() {
         recipesDetails={ recipesDetails }
         id={ id }
         location={ location }
-        type={ type }
+        type="drink"
       />
       <img
         src={ recipesDetails.strDrinkThumb }
@@ -59,7 +59,7 @@ export default function DrinksDetails() {
         </div>
       )}
       <Recommended />
-      <StartRecipes id={ id } type={ type } />
+      <StartRecipes id={ id } type="drinks" />
     </>
   );
 }
