@@ -48,7 +48,6 @@ export default function RecipeInProgress() {
         {getIngredients().map((ingredient, index) => (
           (ingredient !== 'undefined undefined' && ingredient
           !== 'null null' && ingredient !== '  ' && ingredient !== ' ')
-          // comentario qualquer
           && (
             <label
               key={ index }
