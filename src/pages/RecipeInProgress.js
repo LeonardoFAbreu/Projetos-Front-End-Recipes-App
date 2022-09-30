@@ -23,7 +23,6 @@ export default function RecipeInProgress() {
   const nameRecipe = type === 'meals' ? 'strMeal' : 'strDrink';
 
   const getIngredients = () => getRecipeIngredients(recipesDetails);
-  console.log(recipesDetails);
 
   return (
     <div>
@@ -47,7 +46,7 @@ export default function RecipeInProgress() {
       >
         {getIngredients().map((ingredient, index) => (
           (ingredient !== 'undefined undefined' && ingredient
-          !== 'null null' && ingredient !== '  ')
+          !== 'null null' && ingredient !== '  ' && ingredient !== ' ')
           && (
             <label
               key={ index }

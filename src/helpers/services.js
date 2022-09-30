@@ -16,14 +16,8 @@ export const getRecipeIngredients = (recipe) => {
   for (let index = 1; index < totalOfIngredients; index += 1) {
     const ingredient = `strIngredient${index}`;// não pode dar push se for null, string vazia '' ou string vazia com espaço ' '
     const measure = `strMeasure${index}`;
-    console.log(typeof recipe[ingredient]);
-    if (typeof (recipe[ingredient]) !== 'object' && recipe[ingredient] !== undefined) {
-      // if (typeof (recipe[measure]) !== 'object' && recipe[measure] !== undefined) {
-      ingredients.push(`${recipe[ingredient]} ${recipe[measure] !== null ? recipe[measure] : ''}`);
-      // }
-    }
+    ingredients.push(`${recipe[ingredient]} ${recipe[measure]}`);
   }
-  console.log(ingredients);
   return ingredients;
 };
 
