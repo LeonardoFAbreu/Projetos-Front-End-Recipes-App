@@ -22,7 +22,7 @@ export const getRecipeIngredients = (recipe) => {
 };
 
 export const createFavorite = (type, recipesDetails) => {
-  if (type === 'meal') {
+  if (type.includes('meal')) {
     const newFavorite = {
       id: recipesDetails.idMeal,
       type,
