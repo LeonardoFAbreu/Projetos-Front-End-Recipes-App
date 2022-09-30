@@ -47,7 +47,7 @@ export default function RecipeInProgress() {
       >
         {getIngredients().map((ingredient, index) => (
           (ingredient !== 'undefined undefined' && ingredient
-          !== 'null null' && ingredient !== '  ')
+          !== 'null null' && ingredient !== '  ' && ingredient !== ' ')
           && (
             <label
               key={ index }
