@@ -20,7 +20,7 @@ export default function FavoriteAndShare(props) {
   const handleFavorite = () => setIsFavorite(saveFavorite(recipesDetails, type, id));
 
   const handleShare = () => {
-    shareRecipe(location.pathname);
+    shareRecipe(location.pathname.replace('/in-progress', ''));
     setShared(true);
   };
 
