@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import FavoriteAndShare from '../components/FavoriteAndShare';
 import { getRecipesById } from '../helpers/api';
+import { getRecipeIngredients } from '../helpers/services';
 
 export default function RecipeInProgress() {
   const [recipesDetails, setRecipesDetails] = useState({});
-
-  console.log(recipesDetails);
 
   const { id, type } = useParams();
 
@@ -22,6 +21,9 @@ export default function RecipeInProgress() {
 
   const thumbUrl = type === 'meals' ? 'strMealThumb' : 'strDrinkThumb';
   const nameRecipe = type === 'meals' ? 'strMeal' : 'strDrink';
+
+  const getIngredients = () => getRecipeIngredients(recipesDetails);
+  console.log(recipesDetails);
 
   return (
     <div>
@@ -43,7 +45,19 @@ export default function RecipeInProgress() {
       <div
         data-testid="instructions"
       >
-        checkBox
+        {getIngredients().map((ingredient, index) => (
+          (ingredient !== 'undefined undefined' && ingredient
+          !== 'null null' && ingredient !== '  ')
+          && (
+            <label
+              key={ index }
+              htmlFor={ ingredient }
+              data-testid={ `${index}-ingredient-step` }
+            >
+              <input id={ ingredient } type="checkbox" value={ ingredient } />
+              { ingredient }
+            </label>
+          )))}
       </div>
       <button
         type="button"
