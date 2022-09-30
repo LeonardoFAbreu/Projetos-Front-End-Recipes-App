@@ -24,6 +24,8 @@ export default function RecipeInProgress() {
 
   const getIngredients = () => getRecipeIngredients(recipesDetails);
 
+  // const newTypeSemS = type.replace('s', '');
+
   return (
     <div>
       RecipeInProgress
@@ -33,7 +35,7 @@ export default function RecipeInProgress() {
         recipesDetails={ recipesDetails }
         id={ id }
         location={ location }
-        type={ type }
+        type={ type.replace('s', '') }
       />
       <img
         src={ recipesDetails[thumbUrl] }
