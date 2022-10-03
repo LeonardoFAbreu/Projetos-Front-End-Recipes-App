@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 export default function StartRecipes(props) {
-  const { id, type } = props;
+  const { id, type, continueButton } = props;
   return (
     <div className="container-fluid fixed-bottom" data-testid="start-recipe-btn">
       <div
@@ -16,7 +16,7 @@ export default function StartRecipes(props) {
             type="button"
             className="btn btn-md btn-dark"
           >
-            Start Recipe
+            {continueButton === true ? 'Continue Recipe' : 'Start Recipe'}
           </Link>
         </div>
       </div>
@@ -27,4 +27,5 @@ export default function StartRecipes(props) {
 StartRecipes.propTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
+  continueButton: PropTypes.bool.isRequired,
 };

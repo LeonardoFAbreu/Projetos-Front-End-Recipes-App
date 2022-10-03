@@ -7,6 +7,17 @@ import { getRecipeIngredients } from '../helpers/services';
 export default function RecipeInProgress() {
   const [recipesDetails, setRecipesDetails] = useState({});
 
+  const INITIAL_STATE = {
+    drinks: {},
+    meals: {},
+  };
+
+  const [inProgressRecipes, setInProgressRecipes] = useState(
+    JSON.parse(localStorage.getItem('inProgressRecipes')) || INITIAL_STATE,
+  );
+
+  console.log(inProgressRecipes, setInProgressRecipes);
+
   const { id, type } = useParams();
 
   const location = useLocation();
@@ -24,7 +35,38 @@ export default function RecipeInProgress() {
 
   const getIngredients = () => getRecipeIngredients(recipesDetails);
 
-  // const newTypeSemS = type.replace('s', '');
+  const addIngredientInProgressRecipe = (name) => {
+    const arrayIngredients = inProgressRecipes[type][id] || [];
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      ...inProgressRecipes,
+      [type]: { ...inProgressRecipes[type],
+        [id]: [...arrayIngredients, name] },
+    }));
+    setInProgressRecipes(JSON.parse(localStorage.getItem('inProgressRecipes')));
+  };
+
+  const removeIngredientInProgressRecipe = (name) => {
+    const arrayIngredients = inProgressRecipes[type][id].filter((e) => e !== name);
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      ...inProgressRecipes,
+      [type]: { ...inProgressRecipes[type],
+        [id]: arrayIngredients },
+    }));
+    setInProgressRecipes(JSON.parse(localStorage.getItem('inProgressRecipes')));
+  };
+
+  const handleChangeCheckbox = ({ target }) => {
+    if (target.checked === true) {
+      addIngredientInProgressRecipe(target.name);
+    } else {
+      removeIngredientInProgressRecipe(target.name);
+    }
+  };
+
+  const ingredientIsChecked = (ingredient) => {
+    const local = inProgressRecipes[type][id] || [];
+    return local.includes(ingredient);
+  };
 
   return (
     <div className="container">
@@ -71,8 +113,11 @@ export default function RecipeInProgress() {
                 <input
                   id={ ingredient }
                   type="checkbox"
+                  name={ ingredient }
                   className="form-check-input me-2"
                   value={ ingredient }
+                  onChange={ handleChangeCheckbox }
+                  checked={ ingredientIsChecked(ingredient) }
                 />
                 { ingredient }
               </label>
@@ -80,11 +125,11 @@ export default function RecipeInProgress() {
           </ul>
         </div>
       </div>
-      <div className="row justify-content-center mt-3">
+      <div className="row justify-content-center">
         <div className="col-11 text-center">
           <button
             type="button"
-            className="btn btn-md btn-warning"
+            className="btn btn-md btn-warning my-3"
             data-testid="finish-recipe-btn"
           >
             Finish Recipe

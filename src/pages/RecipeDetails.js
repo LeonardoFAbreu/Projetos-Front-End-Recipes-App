@@ -9,6 +9,8 @@ import { embedVideo, getRecipeIngredients } from '../helpers/services';
 export default function RecipesDetails() {
   const [recipesDetails, setRecipesDetails] = useState({});
 
+  const [continueButton, setContinueButton] = useState(false);
+
   const { id } = useParams();
 
   const location = useLocation();
@@ -19,6 +21,10 @@ export default function RecipesDetails() {
       setRecipesDetails(data.meals[0]);
     };
     getDetails();
+    const inProgress = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
+    if (inProgress.meals && inProgress.meals[id]) {
+      setContinueButton(true);
+    }
   }, [id]);
 
   const getIngredients = () => getRecipeIngredients(recipesDetails);
@@ -88,7 +94,7 @@ export default function RecipesDetails() {
         </div>
       )}
       <Recommended />
-      <StartRecipes id={ id } type="meals" />
+      <StartRecipes id={ id } type="meals" continueButton={ continueButton } />
     </div>
   );
 }
