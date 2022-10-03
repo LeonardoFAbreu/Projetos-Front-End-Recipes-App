@@ -10,7 +10,7 @@ export default function StartRecipes(props) {
         className="row justify-content-center p-2 shadow-sm align-items-center"
         style={ { background: '#ffca2c' } }
       >
-        <div className="col-3">
+        <div className="col-5 text-center">
           <Link
             to={ `/${type}/${id}/in-progress` }
             type="button"

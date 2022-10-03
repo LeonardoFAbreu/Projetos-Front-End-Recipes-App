@@ -25,23 +25,32 @@ export default function FavoriteAndShare(props) {
   };
 
   return (
-    <>
-      <img
-        src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-        alt="Favorite"
-        onClick={ handleFavorite }
-        role="presentation"
-        data-testid="favorite-btn"
-      />
-      <img
-        src={ shareIcon }
-        alt="Share"
-        onClick={ handleShare }
-        role="presentation"
-        data-testid="share-btn"
-      />
-      {shared && <span>Link copied!</span>}
-    </>
+    <div className="row justify-content-start my-2">
+      <div className="col-2 text-end">
+
+        <img
+          src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+          alt="Favorite"
+          onClick={ handleFavorite }
+          role="presentation"
+          className="img-fluid"
+          style={ { maxWidth: '26px', cursor: 'pointer' } }
+          data-testid="favorite-btn"
+        />
+      </div>
+      <div className="col-10 text-start">
+        <img
+          src={ shareIcon }
+          alt="Share"
+          onClick={ handleShare }
+          role="presentation"
+          className="img-fluid"
+          style={ { maxWidth: '26px', cursor: 'pointer' } }
+          data-testid="share-btn"
+        />
+        {shared && <span className="ms-3">Link copied!</span>}
+      </div>
+    </div>
   );
 }
 

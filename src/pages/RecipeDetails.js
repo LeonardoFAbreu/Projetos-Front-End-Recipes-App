@@ -26,30 +26,59 @@ export default function RecipesDetails() {
   const handleVideo = (url) => embedVideo(url);
 
   return (
-    <>
-      <p data-testid="recipe-title">{ recipesDetails.strMeal }</p>
-      <p data-testid="recipe-category">{ recipesDetails.strCategory }</p>
+    <div className="container">
+      <div className="row justify-content-center">
+        <h3
+          data-testid="recipe-title"
+          className="text-center mt-3"
+        >
+          { recipesDetails.strMeal }
+        </h3>
+        <h6
+          data-testid="recipe-category"
+          className="text-center text-muted"
+        >
+          { recipesDetails.strCategory }
+        </h6>
+      </div>
+      <img
+        src={ recipesDetails.strMealThumb }
+        alt={ recipesDetails.strMeal }
+        className="img-fluid mx-auto d-block img-thumbnail"
+        style={ { maxHeight: '400px' } }
+        data-testid="recipe-photo"
+      />
       <FavoriteAndShare
         recipesDetails={ recipesDetails }
         id={ id }
         location={ location }
         type="meal"
       />
-      <img
-        src={ recipesDetails.strMealThumb }
-        alt={ recipesDetails.strMeal }
-        className="img-fluid mx-auto d-block"
-        data-testid="recipe-photo"
-      />
-      <p data-testid="instructions">{ recipesDetails.strInstructions }</p>
-      {getIngredients().map((ingredient, index) => (
-        ingredient !== 'undefined undefined'
-       && (
-         <p key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
-           {ingredient}
-         </p>)))}
+      <div className="row justify-content-center">
+        <div className="col-11">
+          <p data-testid="instructions">{ recipesDetails.strInstructions }</p>
+        </div>
+      </div>
+      <ul className="list-group list-group-flush">
+        <li
+          className="list-group-item bg-secondary text-white text-center"
+        >
+          Ingredients
+        </li>
+        {getIngredients().map((ingredient, index) => (
+          (ingredient !== 'undefined undefined' && ingredient
+          !== 'null null' && ingredient !== '  ' && ingredient !== ' ')
+        && (
+          <li
+            key={ index }
+            className="list-group-item"
+            data-testid={ `${index}-ingredient-name-and-measure` }
+          >
+            {ingredient}
+          </li>)))}
+      </ul>
       {recipesDetails.strYoutube && (
-        <div className="ratio ratio-16x9">
+        <div className="ratio ratio-16x9 my-4">
           <iframe
             src={ handleVideo(recipesDetails.strYoutube) }
             title={ recipesDetails.strMeal }
@@ -60,6 +89,6 @@ export default function RecipesDetails() {
       )}
       <Recommended />
       <StartRecipes id={ id } type="meals" />
-    </>
+    </div>
   );
 }

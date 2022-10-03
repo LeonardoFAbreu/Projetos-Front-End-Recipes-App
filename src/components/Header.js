@@ -68,9 +68,6 @@ export default function Header(props) {
               />
             </Link>
           )}
-          {/* <Link to="/favorite-recipes">
-            Fav
-          </Link> */}
         </div>
       </div>
       <div className="row text-center mt-5 justify-content-center">
@@ -104,7 +101,7 @@ export default function Header(props) {
                 type="text"
                 name="search"
                 value={ inputSearch }
-                placeholder="Search"
+                placeholder="Type..."
                 className="form-control mt-3"
                 onChange={ handleInputSearch }
                 data-testid="search-input"
