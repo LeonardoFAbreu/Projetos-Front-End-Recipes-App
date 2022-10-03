@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import FavoriteAndShare from '../components/FavoriteAndShare';
 import { getRecipesById } from '../helpers/api';
 import { getRecipeIngredients } from '../helpers/services';
 
-export default function RecipeInProgress() {
+export default function RecipeInProgress({ history }) {
   const [recipesDetails, setRecipesDetails] = useState({});
 
   const INITIAL_STATE = {
@@ -15,8 +16,6 @@ export default function RecipeInProgress() {
   const [inProgressRecipes, setInProgressRecipes] = useState(
     JSON.parse(localStorage.getItem('inProgressRecipes')) || INITIAL_STATE,
   );
-
-  console.log(inProgressRecipes, setInProgressRecipes);
 
   const { id, type } = useParams();
 
@@ -66,6 +65,19 @@ export default function RecipeInProgress() {
   const ingredientIsChecked = (ingredient) => {
     const local = inProgressRecipes[type][id] || [];
     return local.includes(ingredient);
+  };
+
+  const allIngredientsChecked = () => {
+    const filterIngredients = getIngredients();
+    const allIngredients = [];
+    filterIngredients.forEach((ingredient) => {
+      if (ingredient !== 'undefined undefined' && ingredient
+      !== 'null null' && ingredient !== '  ' && ingredient !== ' ') {
+        allIngredients.push(ingredient);
+      }
+    });
+    const local = inProgressRecipes[type][id] || [];
+    return allIngredients.length !== local.length;
   };
 
   return (
@@ -131,6 +143,8 @@ export default function RecipeInProgress() {
             type="button"
             className="btn btn-md btn-warning my-3"
             data-testid="finish-recipe-btn"
+            onClick={ () => history.push('/done-recipes') }
+            disabled={ allIngredientsChecked() }
           >
             Finish Recipe
           </button>
@@ -139,3 +153,9 @@ export default function RecipeInProgress() {
     </div>
   );
 }
+
+RecipeInProgress.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+}.isRequired;
