@@ -13,7 +13,8 @@ export default function Recommended() {
 
   const maximumCards = 6;
   return (
-    <>
+    <div className="mt-4">
+      <h5 className="text-center bg-secondary text-white p-2">Recommended</h5>
       <div className="wrapper">
         {
           (!isLoading && cards.length > 0) && cards.map((card, index) => (
@@ -24,11 +25,20 @@ export default function Recommended() {
               className="item"
               data-testid={ `${index}-recommendation-card` }
             >
-              <p
-                data-testid={ `${index}-recommendation-title` }
-              >
-                {type.includes('meals') ? card.strDrink : card.strMeal}
-              </p>
+              <div>
+                <span
+                  data-testid={ `${index}-recommendation-title` }
+                >
+                  {type.includes('meals') ? card.strDrink : card.strMeal}
+                </span>
+                <br />
+                <img
+                  src={ type.includes('meals') ? card.strDrinkThumb : card.strMealThumb }
+                  alt="Recipe"
+                  className="img-fluid"
+                  style={ { height: '180px', width: '200px' } }
+                />
+              </div>
             </div>
           ))
         }
@@ -38,6 +48,6 @@ export default function Recommended() {
       <br />
       <br />
       <br />
-    </>
+    </div>
   );
 }

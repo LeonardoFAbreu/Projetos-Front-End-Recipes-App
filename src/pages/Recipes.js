@@ -16,9 +16,7 @@ export default function Recipes() {
   return (
     <>
       <Header title="Meals" showSearch showProfile />
-      <div className="row justify-content-center ">
-        <Filters categories={ mealsCategories } />
-      </div>
+      <Filters categories={ mealsCategories } />
       <div className="container mt-3">
         <div className="row justify-content-center">
           {isLoading && <Loading />}

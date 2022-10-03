@@ -7,6 +7,17 @@ import { getRecipeIngredients } from '../helpers/services';
 export default function RecipeInProgress() {
   const [recipesDetails, setRecipesDetails] = useState({});
 
+  const INITIAL_STATE = {
+    drinks: {},
+    meals: {},
+  };
+
+  const [inProgressRecipes, setInProgressRecipes] = useState(
+    JSON.parse(localStorage.getItem('inProgressRecipes')) || INITIAL_STATE,
+  );
+
+  console.log(inProgressRecipes, setInProgressRecipes);
+
   const { id, type } = useParams();
 
   const location = useLocation();
@@ -24,48 +35,107 @@ export default function RecipeInProgress() {
 
   const getIngredients = () => getRecipeIngredients(recipesDetails);
 
-  // const newTypeSemS = type.replace('s', '');
+  const addIngredientInProgressRecipe = (name) => {
+    const arrayIngredients = inProgressRecipes[type][id] || [];
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      ...inProgressRecipes,
+      [type]: { ...inProgressRecipes[type],
+        [id]: [...arrayIngredients, name] },
+    }));
+    setInProgressRecipes(JSON.parse(localStorage.getItem('inProgressRecipes')));
+  };
+
+  const removeIngredientInProgressRecipe = (name) => {
+    const arrayIngredients = inProgressRecipes[type][id].filter((e) => e !== name);
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      ...inProgressRecipes,
+      [type]: { ...inProgressRecipes[type],
+        [id]: arrayIngredients },
+    }));
+    setInProgressRecipes(JSON.parse(localStorage.getItem('inProgressRecipes')));
+  };
+
+  const handleChangeCheckbox = ({ target }) => {
+    if (target.checked === true) {
+      addIngredientInProgressRecipe(target.name);
+    } else {
+      removeIngredientInProgressRecipe(target.name);
+    }
+  };
+
+  const ingredientIsChecked = (ingredient) => {
+    const local = inProgressRecipes[type][id] || [];
+    return local.includes(ingredient);
+  };
 
   return (
-    <div>
-      RecipeInProgress
-      <p data-testid="recipe-title">{ recipesDetails[nameRecipe] }</p>
-      <p data-testid="recipe-category">{ recipesDetails.strCategory }</p>
+    <div className="container">
+      <div className="row justify-content-center">
+        <h3
+          data-testid="recipe-title"
+          className="text-center mt-3"
+        >
+          { recipesDetails[nameRecipe] }
+        </h3>
+        <h6
+          data-testid="recipe-category"
+          className="text-center text-muted"
+        >
+          { recipesDetails.strCategory }
+        </h6>
+      </div>
+      <img
+        src={ recipesDetails[thumbUrl] }
+        alt={ recipesDetails.strMeal }
+        className="img-fluid mx-auto d-block img-thumbnail"
+        style={ { maxHeight: '400px' } }
+        data-testid="recipe-photo"
+      />
       <FavoriteAndShare
         recipesDetails={ recipesDetails }
         id={ id }
         location={ location }
         type={ type.replace('s', '') }
       />
-      <img
-        src={ recipesDetails[thumbUrl] }
-        alt={ recipesDetails.strMeal }
-        className="img-fluid mx-auto d-block"
-        data-testid="recipe-photo"
-      />
-      <div
-        data-testid="instructions"
-      >
-        {getIngredients().map((ingredient, index) => (
-          (ingredient !== 'undefined undefined' && ingredient
-          !== 'null null' && ingredient !== '  ' && ingredient !== ' ')
-          && (
-            <label
-              key={ index }
-              htmlFor={ ingredient }
-              data-testid={ `${index}-ingredient-step` }
-            >
-              <input id={ ingredient } type="checkbox" value={ ingredient } />
-              { ingredient }
-            </label>
-          )))}
+      <div className="row justify-content-center">
+        <div className="col-11">
+          <ul className="list-group list-group-flush" data-testid="instructions">
+            {getIngredients().map((ingredient, index) => (
+              (ingredient !== 'undefined undefined' && ingredient
+            !== 'null null' && ingredient !== '  ' && ingredient !== ' ')
+            && (
+              <label
+                key={ index }
+                htmlFor={ ingredient }
+                className="list-group-item"
+                data-testid={ `${index}-ingredient-step` }
+              >
+                <input
+                  id={ ingredient }
+                  type="checkbox"
+                  name={ ingredient }
+                  className="form-check-input me-2"
+                  value={ ingredient }
+                  onChange={ handleChangeCheckbox }
+                  checked={ ingredientIsChecked(ingredient) }
+                />
+                { ingredient }
+              </label>
+            )))}
+          </ul>
+        </div>
       </div>
-      <button
-        type="button"
-        data-testid="finish-recipe-btn"
-      >
-        Finalizar Receita
-      </button>
+      <div className="row justify-content-center">
+        <div className="col-11 text-center">
+          <button
+            type="button"
+            className="btn btn-md btn-warning my-3"
+            data-testid="finish-recipe-btn"
+          >
+            Finish Recipe
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

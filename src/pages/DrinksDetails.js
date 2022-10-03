@@ -9,6 +9,8 @@ import { embedVideo, getRecipeIngredients } from '../helpers/services';
 export default function DrinksDetails() {
   const [recipesDetails, setRecipesDetails] = useState({});
 
+  const [continueButton, setContinueButton] = useState(false);
+
   const { id } = useParams();
 
   const location = useLocation();
@@ -19,6 +21,10 @@ export default function DrinksDetails() {
       setRecipesDetails(data.drinks[0]);
     };
     getDetails();
+    const inProgress = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
+    if (inProgress.drinks && inProgress.drinks[id]) {
+      setContinueButton(true);
+    }
   }, [id]);
 
   const getIngredients = () => getRecipeIngredients(recipesDetails);
@@ -26,30 +32,59 @@ export default function DrinksDetails() {
   const handleVideo = (url) => embedVideo(url);
 
   return (
-    <>
-      <p data-testid="recipe-title">{ recipesDetails.strDrink }</p>
-      <p data-testid="recipe-category">{ recipesDetails.strAlcoholic }</p>
+    <div className="container">
+      <div className="row justify-content-center">
+        <h3
+          data-testid="recipe-title"
+          className="text-center mt-3"
+        >
+          { recipesDetails.strDrink }
+        </h3>
+        <h6
+          data-testid="recipe-category"
+          className="text-center text-muted"
+        >
+          { recipesDetails.strAlcoholic }
+        </h6>
+      </div>
+      <img
+        src={ recipesDetails.strDrinkThumb }
+        alt={ recipesDetails.strDrink }
+        className="img-fluid mx-auto d-block img-thumbnail"
+        style={ { maxHeight: '400px' } }
+        data-testid="recipe-photo"
+      />
       <FavoriteAndShare
         recipesDetails={ recipesDetails }
         id={ id }
         location={ location }
         type="drink"
       />
-      <img
-        src={ recipesDetails.strDrinkThumb }
-        alt={ recipesDetails.strDrink }
-        className="img-fluid mx-auto d-block"
-        data-testid="recipe-photo"
-      />
-      <p data-testid="instructions">{ recipesDetails.strInstructions }</p>
-      {getIngredients().map((ingredient, index) => (
-        ingredient !== 'undefined undefined' && ingredient !== 'null null'
-                && (
-                  <p key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
-                    {ingredient}
-                  </p>)))}
+      <div className="row justify-content-center">
+        <div className="col-11">
+          <p data-testid="instructions">{ recipesDetails.strInstructions }</p>
+        </div>
+      </div>
+      <ul className="list-group list-group-flush">
+        <li
+          className="list-group-item bg-secondary text-white text-center"
+        >
+          Ingredients
+        </li>
+        {getIngredients().map((ingredient, index) => (
+          (ingredient !== 'undefined undefined' && ingredient
+          !== 'null null' && ingredient !== '  ' && ingredient !== ' ')
+        && (
+          <li
+            key={ index }
+            className="list-group-item"
+            data-testid={ `${index}-ingredient-name-and-measure` }
+          >
+            {ingredient}
+          </li>)))}
+      </ul>
       {recipesDetails.strYoutube && (
-        <div className="ratio ratio-16x9">
+        <div className="ratio ratio-16x9 my-4">
           <iframe
             src={ handleVideo(recipesDetails.strYoutube) }
             title={ recipesDetails.strDrink }
@@ -59,7 +94,7 @@ export default function DrinksDetails() {
         </div>
       )}
       <Recommended />
-      <StartRecipes id={ id } type="drinks" />
-    </>
+      <StartRecipes id={ id } type="drinks" continueButton={ continueButton } />
+    </div>
   );
 }
