@@ -56,7 +56,7 @@ export default function FavoriteRecipes({ history }) {
     <div>
       <Header title="Favorite Recipes" showSearch={ false } showProfile />
       <div className="container">
-        <div className="col-12 text-center my-3">
+        <div className="col-12 text-center my-4">
           <button
             type="button"
             onClick={ () => handleClickFilter('all') }
@@ -89,7 +89,11 @@ export default function FavoriteRecipes({ history }) {
           </button>
         </div>
         {favorites.map((recipe, index) => (
-          <div key={ recipe.id } className="row align-items-center my-3">
+          <div
+            key={ recipe.id }
+            className="row align-items-center my-3 p-3 border"
+            style={ { background: 'white' } }
+          >
             <div className="col-4">
               <Link
                 to={ `/${recipe.type}s/${recipe.id}` }
