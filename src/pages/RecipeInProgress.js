@@ -27,45 +27,70 @@ export default function RecipeInProgress() {
   // const newTypeSemS = type.replace('s', '');
 
   return (
-    <div>
-      RecipeInProgress
-      <p data-testid="recipe-title">{ recipesDetails[nameRecipe] }</p>
-      <p data-testid="recipe-category">{ recipesDetails.strCategory }</p>
+    <div className="container">
+      <div className="row justify-content-center">
+        <h3
+          data-testid="recipe-title"
+          className="text-center mt-3"
+        >
+          { recipesDetails[nameRecipe] }
+        </h3>
+        <h6
+          data-testid="recipe-category"
+          className="text-center text-muted"
+        >
+          { recipesDetails.strCategory }
+        </h6>
+      </div>
+      <img
+        src={ recipesDetails[thumbUrl] }
+        alt={ recipesDetails.strMeal }
+        className="img-fluid mx-auto d-block img-thumbnail"
+        style={ { maxHeight: '400px' } }
+        data-testid="recipe-photo"
+      />
       <FavoriteAndShare
         recipesDetails={ recipesDetails }
         id={ id }
         location={ location }
         type={ type.replace('s', '') }
       />
-      <img
-        src={ recipesDetails[thumbUrl] }
-        alt={ recipesDetails.strMeal }
-        className="img-fluid mx-auto d-block"
-        data-testid="recipe-photo"
-      />
-      <div
-        data-testid="instructions"
-      >
-        {getIngredients().map((ingredient, index) => (
-          (ingredient !== 'undefined undefined' && ingredient
-          !== 'null null' && ingredient !== '  ' && ingredient !== ' ')
-          && (
-            <label
-              key={ index }
-              htmlFor={ ingredient }
-              data-testid={ `${index}-ingredient-step` }
-            >
-              <input id={ ingredient } type="checkbox" value={ ingredient } />
-              { ingredient }
-            </label>
-          )))}
+      <div className="row justify-content-center">
+        <div className="col-11">
+          <ul className="list-group list-group-flush" data-testid="instructions">
+            {getIngredients().map((ingredient, index) => (
+              (ingredient !== 'undefined undefined' && ingredient
+            !== 'null null' && ingredient !== '  ' && ingredient !== ' ')
+            && (
+              <label
+                key={ index }
+                htmlFor={ ingredient }
+                className="list-group-item"
+                data-testid={ `${index}-ingredient-step` }
+              >
+                <input
+                  id={ ingredient }
+                  type="checkbox"
+                  className="form-check-input me-2"
+                  value={ ingredient }
+                />
+                { ingredient }
+              </label>
+            )))}
+          </ul>
+        </div>
       </div>
-      <button
-        type="button"
-        data-testid="finish-recipe-btn"
-      >
-        Finalizar Receita
-      </button>
+      <div className="row justify-content-center mt-3">
+        <div className="col-11 text-center">
+          <button
+            type="button"
+            className="btn btn-md btn-warning"
+            data-testid="finish-recipe-btn"
+          >
+            Finish Recipe
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

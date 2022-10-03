@@ -55,69 +55,91 @@ export default function FavoriteRecipes({ history }) {
   return (
     <div>
       <Header title="Favorite Recipes" showSearch={ false } showProfile />
-      <button
-        type="button"
-        onClick={ () => handleClickFilter('all') }
-        data-testid="filter-by-all-btn"
-      >
-        All
-      </button>
-      <button
-        type="button"
-        onClick={ () => handleClickFilter('meal') }
-        data-testid="filter-by-meal-btn"
-      >
-        Meals
-      </button>
-      <button
-        type="button"
-        onClick={ () => handleClickFilter('drink') }
-        data-testid="filter-by-drink-btn"
-      >
-        Drinks
-      </button>
-      {favorites.map((recipe, index) => (
-        <div key={ recipe.id }>
-          <Link
-            to={ `/${recipe.type}s/${recipe.id}` }
-            data-testid={ `${index}-horizontal-name` }
+      <div className="container">
+        <div className="col-12 text-center my-3">
+          <button
+            type="button"
+            onClick={ () => handleClickFilter('all') }
+            className="btn btn-md btn-secondary mx-1"
+            data-testid="filter-by-all-btn"
           >
-            {recipe.name}
-          </Link>
-          <p
-            data-testid={ `${index}-horizontal-top-text` }
+            <i className="fa-solid fa-filter" />
+            {' '}
+            All
+          </button>
+          <button
+            type="button"
+            className="btn btn-md btn-secondary mx-1"
+            onClick={ () => handleClickFilter('meal') }
+            data-testid="filter-by-meal-btn"
           >
-            {checkType(recipe)}
-          </p>
-          <Link
-            to={ `/${recipe.type}s/${recipe.id}` }
+            <i className="fa-solid fa-bowl-food" />
+            {' '}
+            Meals
+          </button>
+          <button
+            type="button"
+            className="btn btn-md btn-secondary mx-1"
+            onClick={ () => handleClickFilter('drink') }
+            data-testid="filter-by-drink-btn"
           >
-            <img
-              src={ recipe.image }
-              alt={ recipe.name }
-              onClick={ () => history.push(`/${recipe.type}s/${recipe.id}`) }
-              role="presentation"
-              style={ { maxHeight: '200px' } }
-              data-testid={ `${index}-horizontal-image` }
-            />
-          </Link>
-          <img
-            src={ blackHeartIcon }
-            alt="Favorite"
-            onClick={ () => handleFavorite(recipe) }
-            role="presentation"
-            data-testid={ `${index}-horizontal-favorite-btn` }
-          />
-          <img
-            src={ shareIcon }
-            alt="Share"
-            onClick={ () => handleShare(recipe) }
-            role="presentation"
-            data-testid={ `${index}-horizontal-share-btn` }
-          />
-          {shared && <span>Link copied!</span>}
+            <i className="fa-solid fa-martini-glass-citrus" />
+            {' '}
+            Drinks
+          </button>
         </div>
-      ))}
+        {favorites.map((recipe, index) => (
+          <div key={ recipe.id } className="row align-items-center my-3">
+            <div className="col-4">
+              <Link
+                to={ `/${recipe.type}s/${recipe.id}` }
+              >
+                <img
+                  src={ recipe.image }
+                  alt={ recipe.name }
+                  onClick={ () => history.push(`/${recipe.type}s/${recipe.id}`) }
+                  role="presentation"
+                  style={ { maxHeight: '200px' } }
+                  className="img-fluid mx-auto d-block img-thumbnail"
+                  data-testid={ `${index}-horizontal-image` }
+                />
+              </Link>
+            </div>
+            <div className="col-8">
+              <Link
+                to={ `/${recipe.type}s/${recipe.id}` }
+                data-testid={ `${index}-horizontal-name` }
+              >
+                {recipe.name}
+              </Link>
+              <p
+                data-testid={ `${index}-horizontal-top-text` }
+              >
+                {checkType(recipe)}
+              </p>
+              <img
+                src={ blackHeartIcon }
+                alt="Favorite"
+                onClick={ () => handleFavorite(recipe) }
+                role="presentation"
+                className="img-fluid me-2"
+                style={ { maxWidth: '26px', cursor: 'pointer' } }
+                data-testid={ `${index}-horizontal-favorite-btn` }
+              />
+              <img
+                src={ shareIcon }
+                alt="Share"
+                onClick={ () => handleShare(recipe) }
+                role="presentation"
+                className="img-fluid me-2"
+                style={ { maxWidth: '26px', cursor: 'pointer' } }
+                data-testid={ `${index}-horizontal-share-btn` }
+              />
+              {shared && <span>Link copied!</span>}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

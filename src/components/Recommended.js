@@ -13,7 +13,8 @@ export default function Recommended() {
 
   const maximumCards = 6;
   return (
-    <>
+    <div className="mt-4">
+      <h5 className="text-center bg-secondary text-white p-2">Recommended</h5>
       <div className="wrapper">
         {
           (!isLoading && cards.length > 0) && cards.map((card, index) => (
@@ -47,6 +48,6 @@ export default function Recommended() {
       <br />
       <br />
       <br />
-    </>
+    </div>
   );
 }
