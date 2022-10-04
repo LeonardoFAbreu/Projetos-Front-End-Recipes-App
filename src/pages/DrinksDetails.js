@@ -11,6 +11,8 @@ export default function DrinksDetails() {
 
   const [continueButton, setContinueButton] = useState(false);
 
+  const [doneRecipes, setDoneRecipes] = useState(false);
+
   const { id } = useParams();
 
   const location = useLocation();
@@ -25,6 +27,8 @@ export default function DrinksDetails() {
     if (inProgress.drinks && inProgress.drinks[id]) {
       setContinueButton(true);
     }
+    const done = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    setDoneRecipes(done.some((recipe) => recipe.id === id));
   }, [id]);
 
   const getIngredients = () => getRecipeIngredients(recipesDetails);
@@ -94,7 +98,8 @@ export default function DrinksDetails() {
         </div>
       )}
       <Recommended />
-      <StartRecipes id={ id } type="drinks" continueButton={ continueButton } />
+      {!doneRecipes
+      && <StartRecipes id={ id } type="drinks" continueButton={ continueButton } />}
     </div>
   );
 }
