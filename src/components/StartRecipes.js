@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 export default function StartRecipes(props) {
   const { id, type, continueButton } = props;
+
   return (
     <div className="container-fluid fixed-bottom" data-testid="start-recipe-btn">
       <div
