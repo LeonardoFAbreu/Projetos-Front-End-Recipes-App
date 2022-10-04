@@ -84,7 +84,6 @@ export default function DoneRecipes({ history }) {
             style={ { background: 'white' } }
           >
             <div className="col-4">
-
               <img
                 src={ recipe.image }
                 alt={ recipe.name }
@@ -96,7 +95,6 @@ export default function DoneRecipes({ history }) {
                 className="img-fluid mx-auto d-block img-thumbnail"
                 data-testid={ `${index}-horizontal-image` }
               />
-
             </div>
             <div className="col-8">
               <Link
