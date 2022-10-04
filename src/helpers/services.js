@@ -64,3 +64,47 @@ export const saveFavorite = (recipesDetails, type, currentId) => {
     .setItem('favoriteRecipes', JSON.stringify([...actualFavorites, newFavorite]));
   return true;
 };
+
+const getDate = () => {
+  const data = new Date();
+  const dia = String(data.getDate()).padStart(2, '0');
+  const mes = String(data.getMonth() + 1).padStart(2, '0');
+  const ano = data.getFullYear();
+  return `${dia}/${mes}/${ano}`;
+};
+
+const createNewDone = (type, recipesDetails) => {
+  if (type.includes('meal')) {
+    const newDone = {
+      id: recipesDetails.idMeal,
+      type,
+      nationality: recipesDetails.strArea,
+      category: recipesDetails.strCategory,
+      alcoholicOrNot: '',
+      name: recipesDetails.strMeal,
+      image: recipesDetails.strMealThumb,
+      doneDate: getDate(),
+      tags: recipesDetails.strTags === null ? [] : (recipesDetails.strTags).split(','),
+    };
+    return newDone;
+  }
+  const newDone = {
+    id: recipesDetails.idDrink,
+    type,
+    nationality: '',
+    category: recipesDetails.strCategory,
+    alcoholicOrNot: recipesDetails.strAlcoholic,
+    name: recipesDetails.strDrink,
+    image: recipesDetails.strDrinkThumb,
+    doneDate: getDate(),
+    tags: recipesDetails.strTags === null ? [] : (recipesDetails.strTags).split(','),
+  };
+  return newDone;
+};
+
+export const manageDoneRecipes = (recipesDetails, type) => {
+  const actualDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+  const newDone = createNewDone(recipesDetails, type);
+  localStorage
+    .setItem('doneRecipes', JSON.stringify([...actualDoneRecipes, newDone]));
+};

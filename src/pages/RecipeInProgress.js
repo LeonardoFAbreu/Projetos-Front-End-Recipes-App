@@ -3,11 +3,10 @@ import { useParams, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FavoriteAndShare from '../components/FavoriteAndShare';
 import { getRecipesById } from '../helpers/api';
-import { getRecipeIngredients } from '../helpers/services';
+import { getRecipeIngredients, manageDoneRecipes } from '../helpers/services';
 
 export default function RecipeInProgress({ history }) {
   const [recipesDetails, setRecipesDetails] = useState({});
-
   const INITIAL_STATE = {
     drinks: {},
     meals: {},
@@ -18,7 +17,6 @@ export default function RecipeInProgress({ history }) {
   );
 
   const { id, type } = useParams();
-
   const location = useLocation();
 
   useEffect(() => {
@@ -78,6 +76,12 @@ export default function RecipeInProgress({ history }) {
     });
     const local = inProgressRecipes[type][id] || [];
     return allIngredients.length !== local.length;
+  };
+
+  const addDoneRecipes = () => {
+    manageDoneRecipes(type, recipesDetails);
+    history.push('/done-recipes');
+    return 0;
   };
 
   return (
@@ -143,7 +147,7 @@ export default function RecipeInProgress({ history }) {
             type="button"
             className="btn btn-md btn-warning my-3"
             data-testid="finish-recipe-btn"
-            onClick={ () => history.push('/done-recipes') }
+            onClick={ () => addDoneRecipes() }
             disabled={ allIngredientsChecked() }
           >
             Finish Recipe
