@@ -79,13 +79,24 @@ describe('Testa a tela RecipeDetails', () => {
       userEvent.click(firstIngredient);
     });
   });
-  test('Clica em todos os ingredientes e logo após clica em Finish Recipe', () => {
+  test('Clica em todos os ingredientes e logo após clica em Finish Recipe', async () => {
     const { history } = renderWithRouter(<App />);
-    history.push('/drinks/17203/in-progress');
-    const firstIngredient = screen.getByTestId('0-ingredient-step');
-    const secondIngredient = screen.getByTestId('1-ingredient-step');
-    userEvent.click(firstIngredient, secondIngredient);
-    // const finish = screen.getByTestId('finish-recipe-btn');
-    // userEvent.click(finish);
+    const email = screen.getByTestId(emailTestID);
+    const password = screen.getByTestId(passwordID);
+    const buttonEnter = screen.getByTestId(buttonEnterID);
+    userEvent.type(email, 'gruupoo12@trybe.com');
+    userEvent.type(password, '1234567');
+    userEvent.click(buttonEnter);
+
+    await waitFor(() => {
+      history.push('/drinks/17203/in-progress');
+      const firstIngredient = screen.getByTestId('0-ingredient-step');
+      const secondIngredient = screen.getByTestId('1-ingredient-step');
+      userEvent.click(firstIngredient);
+      userEvent.click(secondIngredient);
+      const finish = screen.getByTestId('finish-recipe-btn');
+      userEvent.click(finish);
+      expect(history.location.pathname).toBe('/done-recipes');
+    });
   });
 });
