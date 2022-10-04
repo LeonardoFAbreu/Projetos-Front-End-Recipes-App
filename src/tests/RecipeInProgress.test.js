@@ -8,6 +8,7 @@ const emailTestID = 'email-input';
 const passwordID = 'password-input';
 const buttonEnterID = 'login-submit-btn';
 const firstStep = '0-ingredient-step';
+const rotaMels = '/meals/52977/in-progress';
 
 describe('Testa a tela RecipeDetails', () => {
   test('Verifica se existem os ingredientes da receita', async () => {
@@ -25,7 +26,7 @@ describe('Testa a tela RecipeDetails', () => {
       expect(firstIngredient).toBeInTheDocument();
       const buttonStart = screen.getByText('Start Recipe');
       userEvent.click(buttonStart);
-      expect(history.location.pathname).toBe('/meals/52977/in-progress');
+      expect(history.location.pathname).toBe(rotaMels);
     });
   });
   test('Verifica se existem os ingredientes da receita', async () => {

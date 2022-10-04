@@ -52,6 +52,7 @@ describe('Testa a tela de favorites', () => {
     history.push('/done-recipes');
   });
 
+  const img = '0-horizontal-image';
   test('Verifica se os botões de compartilhar são clicáveis', async () => {
     await waitFor(() => {
       jest.spyOn(navigator.clipboard, 'writeText');
@@ -61,11 +62,47 @@ describe('Testa a tela de favorites', () => {
       const btnShare1 = screen.getByTestId('0-horizontal-share-btn');
       expect(btnShare1).toBeInTheDocument();
       userEvent.click(btnShare1);
+      userEvent.click(doneDrinkShareButton);
       // const clipBoard1 = screen.getByText('Link copied!')[0];
       // expect(clipBoard1).toBeInTheDocument();
     });
     // const clipBoard1 = screen.getAllByText('Link copied!')[0];
     // expect(window.navigator.clipboard.writeText)
     //   .toHaveBeenCalledWith('http://localhost:3000/meals/52771');
+  });
+  test('Verifica se encaminha para pagina Detalhes', async () => {
+    await waitFor(() => {
+      const imgThumb = screen.getByTestId(img);
+      userEvent.click(imgThumb);
+      const imgDetail = screen.getByTestId('recipe-photo');
+      expect(imgDetail).toBeInTheDocument();
+    });
+  });
+
+  test('Verifica se aparece Comida no filtro MEALS', async () => {
+    await waitFor(() => {
+      const buttonMeals = screen.getByTestId('filter-by-meal-btn');
+      userEvent.click(buttonMeals);
+      const imgMeals = screen.getByTestId(img);
+      expect(imgMeals).toBeInTheDocument();
+    });
+  });
+  test('Verifica se aparece Bebida no filtro Drinks', async () => {
+    await waitFor(() => {
+      const buttonDrink = screen.getByTestId('filter-by-drink-btn');
+      userEvent.click(buttonDrink);
+      const imgDrink = screen.getByTestId('1-horizontal-image');
+      expect(imgDrink).toBeInTheDocument();
+    });
+  });
+  test('Verifica se ao clicar em ALL, Limpa os filtros', async () => {
+    await waitFor(() => {
+      const imgThumb = screen.getByTestId('filter-by-all-btn');
+      userEvent.click(imgThumb);
+      const imgMeals = screen.getByTestId(img);
+      const imgDrink = screen.getByTestId('1-horizontal-image');
+      expect(imgMeals).toBeInTheDocument();
+      expect(imgDrink).toBeInTheDocument();
+    });
   });
 });
