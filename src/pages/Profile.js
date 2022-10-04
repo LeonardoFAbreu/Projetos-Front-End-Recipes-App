@@ -15,25 +15,43 @@ export default function Profile({ history }) {
   };
 
   return (
-    <div>
+    <>
       <Header title="Profile" showSearch={ false } showProfile />
-      <h2 data-testid="profile-email">{ objectEmail && objectEmail.email }</h2>
-      <Link to="/done-recipes" data-testid="profile-done-btn">
-        Done Recipes
-      </Link>
-      <Link to="/favorite-recipes" data-testid="profile-favorite-btn">
-        Favorite Recipes
-      </Link>
-      <button
-        type="button"
-        onClick={ logoutAccount }
-        data-testid="profile-logout-btn"
-      >
-        Logout
-
-      </button>
+      <div className="container">
+        <h5 data-testid="profile-email" className="text-center my-4">
+          { objectEmail && objectEmail.email }
+        </h5>
+        <div className="row justify-content-center">
+          <Link
+            to="/done-recipes"
+            className="col-3 btn btn-sm btn-warning"
+            data-testid="profile-done-btn"
+          >
+            <i className="fa-solid fa-check me-1" />
+            Done Recipes
+          </Link>
+          <Link
+            to="/favorite-recipes"
+            className="col-4 btn btn-sm btn-warning mx-1"
+            data-testid="profile-favorite-btn"
+          >
+            <i className="fa-regular fa-heart me-2" />
+            Favorite Recipes
+          </Link>
+          <button
+            type="button"
+            className="col-3 btn btn-sm btn-danger"
+            onClick={ logoutAccount }
+            data-testid="profile-logout-btn"
+          >
+            <i className="fa-solid fa-right-from-bracket me-2" />
+            {' '}
+            Logout
+          </button>
+        </div>
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }
 

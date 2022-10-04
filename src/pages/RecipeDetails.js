@@ -6,7 +6,7 @@ import StartRecipes from '../components/StartRecipes';
 import { getRecipesById } from '../helpers/api';
 import { embedVideo, getRecipeIngredients } from '../helpers/services';
 
-export default function DrinksDetails() {
+export default function RecipesDetails() {
   const [recipesDetails, setRecipesDetails] = useState({});
 
   const [continueButton, setContinueButton] = useState(false);
@@ -19,12 +19,12 @@ export default function DrinksDetails() {
 
   useEffect(() => {
     const getDetails = async () => {
-      const data = await getRecipesById('drinks', id);
-      setRecipesDetails(data.drinks[0]);
+      const data = await getRecipesById('meals', id);
+      setRecipesDetails(data.meals[0]);
     };
     getDetails();
     const inProgress = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
-    if (inProgress.drinks && inProgress.drinks[id]) {
+    if (inProgress.meals && inProgress.meals[id]) {
       setContinueButton(true);
     }
     const done = JSON.parse(localStorage.getItem('doneRecipes')) || [];
@@ -42,18 +42,18 @@ export default function DrinksDetails() {
           data-testid="recipe-title"
           className="text-center mt-3"
         >
-          { recipesDetails.strDrink }
+          { recipesDetails.strMeal }
         </h3>
         <h6
           data-testid="recipe-category"
           className="text-center text-muted"
         >
-          { recipesDetails.strAlcoholic }
+          { recipesDetails.strCategory }
         </h6>
       </div>
       <img
-        src={ recipesDetails.strDrinkThumb }
-        alt={ recipesDetails.strDrink }
+        src={ recipesDetails.strMealThumb }
+        alt={ recipesDetails.strMeal }
         className="img-fluid mx-auto d-block img-thumbnail"
         style={ { maxHeight: '400px' } }
         data-testid="recipe-photo"
@@ -62,7 +62,7 @@ export default function DrinksDetails() {
         recipesDetails={ recipesDetails }
         id={ id }
         location={ location }
-        type="drink"
+        type="meal"
       />
       <div className="row justify-content-center">
         <div className="col-11">
@@ -91,7 +91,7 @@ export default function DrinksDetails() {
         <div className="ratio ratio-16x9 my-4">
           <iframe
             src={ handleVideo(recipesDetails.strYoutube) }
-            title={ recipesDetails.strDrink }
+            title={ recipesDetails.strMeal }
             allowFullScreen
             data-testid="video"
           />
@@ -99,7 +99,7 @@ export default function DrinksDetails() {
       )}
       <Recommended />
       {!doneRecipes
-      && <StartRecipes id={ id } type="drinks" continueButton={ continueButton } />}
+      && <StartRecipes id={ id } type="meals" continueButton={ continueButton } />}
     </div>
   );
 }

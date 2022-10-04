@@ -121,6 +121,7 @@ describe('Testa o component SearchBar', () => {
     userEvent.paste(searchInput, 'Lassi - Mango');
     const buttonSearch = screen.getByTestId(buttonSearchID);
     userEvent.click(buttonSearch);
+    // history.push('/drinks/12698');
     await waitFor(() => expect(history.location.pathname).toBe('/drinks/12698'));
   });
   test('Verifica se nenhum drink é encontrado, o usuário recebe um ALERT', async () => {

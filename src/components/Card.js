@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export default function Card(props) {
-  const { index, name, image } = props;
+  const { id, index, name, image } = props;
   return (
-    <div
+    <Link
+      to={ `${id}` }
       className="col-6 p-2 my-1"
       data-testid={ `${index}-recipe-card` }
     >
@@ -20,11 +22,12 @@ export default function Card(props) {
           data-testid={ `${index}-card-img` }
         />
       </div>
-    </div>
+    </Link>
   );
 }
 
 Card.propTypes = {
+  id: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,

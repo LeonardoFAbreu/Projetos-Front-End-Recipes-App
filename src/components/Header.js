@@ -27,20 +27,24 @@ export default function Header(props) {
         style={ { background: '#f1f1f1' } }
       >
         <div className="col-3">
-          <img
-            src={ logo }
-            alt="Recipes Logo"
-            className="img-fluid"
-            style={ { maxWidth: '60px', borderRadius: '50%' } }
-          />
+          <Link to="/meals">
+            <img
+              src={ logo }
+              alt="Recipes Logo"
+              className="img-fluid"
+              style={ { maxWidth: '60px', borderRadius: '50%' } }
+            />
+          </Link>
         </div>
         <div className="col-6">
-          <img
-            src={ logoTitle }
-            alt="Recipes Title Logo"
-            className="img-fluid"
-            style={ { maxWidth: '180px' } }
-          />
+          <Link to="/meals">
+            <img
+              src={ logoTitle }
+              alt="Recipes Title Logo"
+              className="img-fluid"
+              style={ { maxWidth: '180px' } }
+            />
+          </Link>
         </div>
         <div className="col-3 d-flex">
           {showSearch && (
@@ -67,7 +71,7 @@ export default function Header(props) {
         </div>
       </div>
       <div className="row text-center mt-5 justify-content-center">
-        <div className="col-6 align-items-center">
+        <div className="col-10 align-items-center">
           {location.pathname === '/meals'
           && <i className="fa-solid fa-utensils me-2 fa-2xl" /> }
           {location.pathname === '/drinks'
@@ -97,7 +101,7 @@ export default function Header(props) {
                 type="text"
                 name="search"
                 value={ inputSearch }
-                placeholder="Search"
+                placeholder="Type..."
                 className="form-control mt-3"
                 onChange={ handleInputSearch }
                 data-testid="search-input"

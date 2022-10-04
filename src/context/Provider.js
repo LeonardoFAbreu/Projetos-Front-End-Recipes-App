@@ -9,11 +9,11 @@ import {
 } from '../helpers/api';
 
 export default function Provider({ children }) {
-  const [foodRecipes, setMealsRecipes] = useState([]);
+  const [mealsRecipes, setMealsRecipes] = useState([]);
 
   const [mealsCategories, setMealsCategories] = useState([]);
 
-  const [drinkRecipes, setDrinkRecipes] = useState([]);
+  const [drinksRecipes, setDrinkRecipes] = useState([]);
 
   const [drinksCategories, setDrinksCategories] = useState([]);
 
@@ -48,9 +48,9 @@ export default function Provider({ children }) {
   }, []);
 
   const contextValue = {
-    drinkRecipes,
+    drinksRecipes,
     setDrinkRecipes,
-    foodRecipes,
+    mealsRecipes,
     setMealsRecipes,
     isLoading,
     setIsLoading,
