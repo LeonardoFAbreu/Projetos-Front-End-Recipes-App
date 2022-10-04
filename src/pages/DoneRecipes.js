@@ -7,6 +7,7 @@ import { shareRecipe } from '../helpers/services';
 
 export default function DoneRecipes({ history }) {
   const [doneRecipes, setDoneRecipes] = useState([]);
+  console.log(doneRecipes);
 
   useEffect(() => {
     setDoneRecipes(JSON.parse(localStorage.getItem('doneRecipes')) || []);

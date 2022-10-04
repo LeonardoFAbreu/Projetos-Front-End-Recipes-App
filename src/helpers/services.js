@@ -14,7 +14,7 @@ export const getRecipeIngredients = (recipe) => {
   const totalOfIngredients = 21;
   const ingredients = [];
   for (let index = 1; index < totalOfIngredients; index += 1) {
-    const ingredient = `strIngredient${index}`;// não pode dar push se for null, string vazia '' ou string vazia com espaço ' '
+    const ingredient = `strIngredient${index}`;
     const measure = `strMeasure${index}`;
     ingredients.push(`${recipe[ingredient]} ${recipe[measure]}`);
   }
@@ -65,7 +65,7 @@ export const saveFavorite = (recipesDetails, type, currentId) => {
   return true;
 };
 
-const getDate = () => {
+export const getDate = () => {
   const data = new Date();
   const dia = String(data.getDate()).padStart(2, '0');
   const mes = String(data.getMonth() + 1).padStart(2, '0');
@@ -73,7 +73,7 @@ const getDate = () => {
   return `${dia}/${mes}/${ano}`;
 };
 
-const createNewDone = (type, recipesDetails) => {
+export const createNewDone = (type, recipesDetails) => {
   if (type.includes('meal')) {
     const newDone = {
       id: recipesDetails.idMeal,
