@@ -12,7 +12,6 @@ export default function DoneRecipes({ history }) {
   useEffect(() => {
     setDoneRecipes(JSON.parse(localStorage.getItem('doneRecipes')) || []);
   }, []);
-  console.log('renderizou');
   const [shared, setShared] = useState(false);
 
   const handleShare = (recipe) => {
@@ -34,10 +33,10 @@ export default function DoneRecipes({ history }) {
   const handleClickFilter = (type) => {
     let dones = JSON.parse(localStorage.getItem('doneRecipes')) || [];
     if (type === 'meals') {
-      dones = dones.filter((e) => e.type === 'meals');
+      dones = dones.filter((e) => e.type === 'meal');
     }
     if (type === 'drinks') {
-      dones = dones.filter((e) => e.type === 'drinks');
+      dones = dones.filter((e) => e.type === 'drink');
     }
     setDoneRecipes(dones);
   };
@@ -89,7 +88,9 @@ export default function DoneRecipes({ history }) {
               <img
                 src={ recipe.image }
                 alt={ recipe.name }
-                onClick={ () => history.push(`/${recipe.type}/${recipe.id}`) }
+                onClick={ () => {
+                  history.push(`/${recipe.type.replace('s', '')}s/${recipe.id}`);
+                } }
                 role="presentation"
                 style={ { maxHeight: '200px' } }
                 className="img-fluid mx-auto d-block img-thumbnail"
@@ -99,7 +100,7 @@ export default function DoneRecipes({ history }) {
             </div>
             <div className="col-8">
               <Link
-                to={ `/${recipe.type}/${recipe.id}` }
+                to={ `/${recipe.type.replace('s', '')}s/${recipe.id}` }
                 data-testid={ `${index}-horizontal-name` }
               >
                 {recipe.name}
