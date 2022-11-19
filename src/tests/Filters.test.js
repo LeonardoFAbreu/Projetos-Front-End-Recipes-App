@@ -9,7 +9,7 @@ const passwordID = 'password-input';
 const buttonEnterID = 'login-submit-btn';
 
 describe('Verifica o funcionamento da rota Filters', () => {
-  test('Verifica a renderiçao de receitas com carne', async () => {
+  test('Verifica a renderizaçao de receitas com carne', async () => {
     renderWithRouter(<App />);
     const email = screen.getByTestId(emailTestID);
     const password = screen.getByTestId(passwordID);
